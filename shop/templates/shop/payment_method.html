@@ -1,0 +1,27 @@
+{% extends 'shop/base.html' %}
+{% block title %} {{ payment_method.meta_title }} {% endblock %}
+{% block meta_description %} {{ payment_method.meta_description }} {% endblock %}
+{% block meta_keywords %} {{ payment_method.meta_keywords }} {% endblock %}
+{% block meta_title %} {{ payment_method.meta_title }} {% endblock %}
+{% load staticfiles %}
+{% block contain %}
+<head>
+	<link rel="stylesheet" type="text/css" href="{% static 'shop/styles/blog_single_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'shop/styles/blog_single_responsive.css' %}">
+</head>
+<div class="super_container">
+	<div class="single_post">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					{% if payment_method.title %}<div class="single_post_title">{{ payment_method.title }}</div>{% endif %}
+					<div class="single_post_text">
+						{{ payment_method.description|safe }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

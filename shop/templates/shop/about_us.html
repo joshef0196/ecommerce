@@ -1,0 +1,27 @@
+{% extends 'shop/base.html' %}
+{% block title %} {{ about_us.meta_title }} {% endblock %}
+{% block meta_description %} {{ about_us.meta_description }} {% endblock %}
+{% block meta_keywords %} {{ about_us.meta_keywords }} {% endblock %}
+{% block meta_title %} {{ about_us.meta_title }} {% endblock %}
+{% load staticfiles %}
+{% block contain %}
+<head>
+	<link rel="stylesheet" type="text/css" href="{% static 'shop/styles/blog_single_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'shop/styles/blog_single_responsive.css' %}">
+</head>
+<div class="super_container">
+	<div class="single_post">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					{% if about_us.title %}<div class="single_post_title">{{ about_us.title }}</div>{% endif %}
+					<div class="single_post_text">
+						{{ about_us.description|safe }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'shop/base.html' %}
+{% block title %} {{ terms_conditions.meta_title }} {% endblock %}
+{% block meta_description %} {{ terms_conditions.meta_description }} {% endblock %}
+{% block meta_keywords %} {{ terms_conditions.meta_keywords }} {% endblock %}
+{% block meta_title %} {{ terms_conditions.meta_title }} {% endblock %}
+{% load staticfiles %}
+{% block contain %}
+<head>
+	<link rel="stylesheet" type="text/css" href="{% static 'shop/styles/blog_single_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'shop/styles/blog_single_responsive.css' %}">
+</head>
+<div class="super_container">
+	<div class="single_post">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					{% if terms_conditions.title %}<div class="single_post_title">{{ terms_conditions.title }}</div>{% endif %}
+					<div class="single_post_text">
+						{{ terms_conditions.description|safe }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'shop/base.html' %}
+{% block title %} {{ return_refund_policy.meta_title }} {% endblock %}
+{% block meta_description %} {{ return_refund_policy.meta_description }} {% endblock %}
+{% block meta_keywords %} {{ return_refund_policy.meta_keywords }} {% endblock %}
+{% block meta_title %} {{ return_refund_policy.meta_title }} {% endblock %}
+{% load staticfiles %}
+{% block contain %}
+<head>
+	<link rel="stylesheet" type="text/css" href="{% static 'shop/styles/blog_single_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'shop/styles/blog_single_responsive.css' %}">
+</head>
+<div class="super_container">
+	<div class="single_post">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					{% if return_refund_policy.title %}<div class="single_post_title">{{ return_refund_policy.title }}</div>{% endif %}
+					<div class="single_post_text">
+						{{ return_refund_policy.description|safe }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
