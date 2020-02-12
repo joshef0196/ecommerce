@@ -75,7 +75,33 @@ def offers(request):
     context = {
         'privacy_policy' : privacy_policy,
     }
-    return render(request,'shop/privacy_policy.html', context)
+    return render(request,'shop/offers.html', context)
+
+def faq(request):
+    privacy_policy = models.PrivacyPolicy.objects.filter(status = True).first()
+    context = {
+        'privacy_policy' : privacy_policy,
+    }
+    return render(request,'shop/faq.html', context)
+
+def wishlist(request):
+    privacy_policy = models.PrivacyPolicy.objects.filter(status = True).first()
+    context = {
+        'privacy_policy' : privacy_policy,
+    }
+    return render(request,'shop/account/wishlist.html', context)
+
+def cart_list(request):
+    
+    return render(request,'shop/account/cart.html')
+
+def checkout(request):
+
+    return render(request,'shop/account/checkout.html')
+
+def order_complete(request):
+
+    return render(request,'shop/account/order_complete.html')
 
 def single_product(request):
 

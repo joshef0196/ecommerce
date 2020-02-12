@@ -24,7 +24,7 @@
 
 <div class="super_container">
 	<header class="header">
-		<div class="top_bar" id="navbarr">
+		<div class="top_bar">
 			<div class="container">
 				<div class="row">
 					<div class="col d-flex flex-row">
@@ -87,7 +87,7 @@
 							<div class="wishlist d-flex flex-row align-items-center justify-content-end">
 								<div class="wishlist_icon"><img src="{% static 'shop/images/heart.png' %}" alt=""></div>
 								<div class="wishlist_content">
-									<div class="wishlist_text"><a href="#">Wishlist</a></div>
+									<div class="wishlist_text"><a href="/wishlist/">Wishlist</a></div>
 									<div class="wishlist_count">115</div>
 								</div>
 							</div>
@@ -100,7 +100,7 @@
 										<div class="cart_count"><span>10</span></div>
 									</div>
 									<div class="cart_content">
-										<div class="cart_text"><a href="#">Cart</a></div>
+										<div class="cart_text"><a href="/cart-list/">Cart</a></div>
 										<div class="cart_price">$85</div>
 									</div>
 								</div>
@@ -120,7 +120,7 @@
 							<!-- Main Nav Menu -->
 							<div class="main_nav_menu">
 								<ul class="standard_dropdown main_nav_dropdown">
-									<li><a href="#">Home<i class="fas fa-chevron-down"></i></a></li>
+									<li><a href="/">Home<i class="fas fa-chevron-down"></i></a></li>
 									<li class="hassubs">
 										<a href="#">Super Deals<i class="fas fa-chevron-down"></i></a>
 										<ul>
@@ -329,7 +329,7 @@
 						<ul class="footer_list">
 							<li><a href="/about-us/">About Us</a></li>
 							<li><a href="/contact-us/">Contact Us</a></li>
-							<li><a href="#">FAQs</a></li>
+							<li><a href="/faq/">FAQs</a></li>
 						</ul>
 					</div>
 				</div>
@@ -341,8 +341,8 @@
 							<li><a href="#">Order History</a></li>
 							<li><a href="#">My Account</a></li>
 							<li><a href="#">Login</a></li>
-							<li><a href="#">My Cart</a></li>
-							<li><a href="#">Wish List</a></li>
+							<li><a href="/cart-list/">My Cart</a></li>
+							<li><a href="/wishlist/">Wish List</a></li>
 						</ul>
 					</div>
 				</div>
@@ -358,18 +358,6 @@
 							<li><a href="/terms-and-conditions/">Terms & Conditions</a></li>
 							<li><a href="/refund-policy/">Return & Refund Policy</a></li>
 							<li><a href="/privacy/">Privacy Policy</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-lg-2">
-					<div class="footer_column">
-						<ul class="footer_list">
-							<li><a href="/about-us/">About Us</a></li>
-							<li><a href="/contact-us/">Contact Us</a></li>
-							<li><a href="#">FAQs</a></li>
 						</ul>
 					</div>
 				</div>
@@ -429,6 +417,7 @@
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCIwF204lFZg1y4kPSIhKaHEXMLYxxuMhA"></script>
 <script src="{% static 'shop/js/contact_custom.js' %}"></script>
 <script src="{% static 'shop/js/product_custom.js' %}"></script>
+<script src="{% static 'shop/js/cart_custom.js' %}"></script>
 </body>
 
 </html>

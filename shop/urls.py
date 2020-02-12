@@ -12,5 +12,10 @@ urlpatterns = [
     path('refund-policy/', views.return_refund_policy),
     path('privacy/', views.privacy_policy),
     path('offers/', views.offers),
+    path('faq/', views.faq),
+    path('wishlist/', views.wishlist),
+    path('cart-list/', views.cart_list),
+    path('checkout/', views.checkout),
+    path('order-success/', views.order_complete),
     path('single/', views.single_product),
 ]
