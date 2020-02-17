@@ -115,8 +115,8 @@ class SubSubCatagory(models.Model):
 
 class Products(models.Model):
     cat_name       = models.ForeignKey(SubCatagory, on_delete=models.CASCADE, blank=True)
-    sub_cat_name   = models.ForeignKey(SubSubCatagory, on_delete=models.CASCADE, blank=True)
-    brand_name     = models.ForeignKey(Brands, on_delete=models.CASCADE, blank=True)
+    sub_cat_name   = models.ForeignKey(SubSubCatagory, on_delete=models.CASCADE, blank=True, null = True)
+    brand_name     = models.ForeignKey(Brands, on_delete=models.CASCADE, blank=True, null = True)
     product_name   = models.TextField(max_length=200)
     product_code   = models.CharField(max_length=20, blank=True)
     product_image1 = models.ImageField(upload_to='products', blank=True)

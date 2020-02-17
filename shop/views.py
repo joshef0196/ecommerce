@@ -107,3 +107,7 @@ def single_product(request):
 
     return render(request,'shop/single_product.html')
  
+def products_cat(request):
+
+    return render(request,'shop/products_cat.html')
+ 

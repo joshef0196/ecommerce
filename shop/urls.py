@@ -18,4 +18,6 @@ urlpatterns = [
     path('checkout/', views.checkout),
     path('order-success/', views.order_complete),
     path('single/', views.single_product),
+    # path('<str:cat_name>/<str:sub_cat>/', views.products_cat),
+    path('test/', views.products_cat),
 ]

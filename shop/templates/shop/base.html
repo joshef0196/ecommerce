@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load staticfiles %}
+	{% load data_load %}
+	{% load staticfiles %}
     <title>{% block title %} {% endblock %}</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'shop/plugins/slick-1.8.0/slick.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'shop/styles/main_styles.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'shop/styles/responsive.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'shop/plugins/jquery-ui-1.12.1.custom/jquery-ui.css' %}">
 	
 </head>
 
@@ -120,53 +122,32 @@
 							<!-- Main Nav Menu -->
 							<div class="main_nav_menu">
 								<ul class="standard_dropdown main_nav_dropdown">
-									<li><a href="/">Home<i class="fas fa-chevron-down"></i></a></li>
-									<li class="hassubs">
-										<a href="#">Super Deals<i class="fas fa-chevron-down"></i></a>
-										<ul>
-											<li>
-												<a href="#">Menu Item<i class="fas fa-chevron-down"></i></a>
-												<ul>
-													<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-													<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-													<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-												</ul>
-											</li>
-											<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-											<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-											<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-										</ul>
-									</li>
-									<li class="hassubs">
-										<a href="#">Featured Brands<i class="fas fa-chevron-down"></i></a>
-										<ul>
-											<li>
-												<a href="#">Menu Item<i class="fas fa-chevron-down"></i></a>
-												<ul>
-													<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-													<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-													<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-												</ul>
-											</li>
-											<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-											<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-											<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-										</ul>
-									</li>
-									<li class="hassubs">
-										<a href="#">Pages<i class="fas fa-chevron-down"></i></a>
-										<ul>
-											<li><a href="shop.html">Shop<i class="fas fa-chevron-down"></i></a></li>
-											<li><a href="product.html">Product<i class="fas fa-chevron-down"></i></a></li>
-											<li><a href="blog.html">Blog<i class="fas fa-chevron-down"></i></a></li>
-											<li><a href="blog_single.html">Blog Post<i class="fas fa-chevron-down"></i></a></li>
-											<li><a href="regular.html">Regular Post<i class="fas fa-chevron-down"></i></a></li>
-											<li><a href="cart.html">Cart<i class="fas fa-chevron-down"></i></a></li>
-											<li><a href="/contact-us/">Contact<i class="fas fa-chevron-down"></i></a></li>
-										</ul>
-									</li>
-									<li><a href="blog.html">Blog<i class="fas fa-chevron-down"></i></a></li>
-									<li><a href="/contact-us/">Contact<i class="fas fa-chevron-down"></i></a></li>
+									<li><a href="/">Home</a></li>
+									{% regroup "1"|product_menu by cat_name.cat_name as product_category_list %}
+									{% for data in product_category_list  %}
+										<li class="hassubs">
+											<a href="#">{{ data.grouper }}<i class="fas fa-chevron-down"></i></a>
+											<ul>
+												{% regroup data.list by cat_name as sub_cat_list %}
+												{% for cat in sub_cat_list %}
+													{% regroup cat.list by sub_cat_name as sub_cat_list %}
+													{% for br in sub_cat_list %}
+														{% if br.grouper %}
+															<li>
+																<a href="#">{{ cat.grouper }} <i class="fas fa-angle-right"></i></a>
+																<ul>
+																	<li><a href="#">{{ br.grouper }}</a></li>
+																</ul>
+															</li>
+														{% else %}
+															<li><a href="#">{{ cat.grouper }}</a></li>
+														{% endif %}
+													{% endfor %}
+												{% endfor %}
+											</ul>
+										</li>
+									{% endfor %}
+									<li><a href="/contact-us/">Contact</a></li>
 								</ul>
 							</div>
 
@@ -256,7 +237,6 @@
 										<li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
 									</ul>
 								</li>
-								<li class="page_menu_item"><a href="blog.html">blog<i class="fa fa-angle-down"></i></a></li>
 								<li class="page_menu_item"><a href="contact.html">contact<i class="fa fa-angle-down"></i></a></li>
 							</ul>
 							
@@ -388,6 +368,7 @@
 		</div>
 	</div>
 </div>
+
 <script>
 	window.onscroll = function() {myFunction()};
 	var navbar = document.getElementById("navbar");
@@ -418,6 +399,9 @@
 <script src="{% static 'shop/js/contact_custom.js' %}"></script>
 <script src="{% static 'shop/js/product_custom.js' %}"></script>
 <script src="{% static 'shop/js/cart_custom.js' %}"></script>
+<script src="{% static 'shop/js/shop_custom.js' %}"></script>
+<script src="{% static 'shop/plugins/Isotope/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'shop/plugins/jquery-ui-1.12.1.custom/jquery-ui.js' %}"></script>
+<script src="{% static 'shop/plugins/parallax-js-master/parallax.min.js' %}"></script>
 </body>
-
 </html>

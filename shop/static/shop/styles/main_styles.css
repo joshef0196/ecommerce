@@ -391,7 +391,6 @@ section
 }
 .standard_dropdown li a i
 {
-	display: none;
 	-webkit-transform: translateY(-1px);
 	-moz-transform: translateY(-1px);
 	-ms-transform: translateY(-1px);
@@ -504,6 +503,8 @@ section
 .header_main
 {
 	z-index: 1;
+	margin-top: -10px;
+    margin-bottom: -10px;
 }
 .header.scrolled .header_main
 {
@@ -4261,5 +4262,23 @@ h3.w3ls-title.w3ls-title1 {
     font-family: "Roboto", Arial, sans-serif;
     font-weight: 400;
     margin: 0 0 20px 0;
+}
+.radio, .checkbox {
+    position: relative;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.radio label, .checkbox label {
+    min-height: 20px;
+    padding-left: 20px;
+    margin-bottom: 0;
+    font-weight: normal;
+    cursor: pointer;
+}
+.radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] {
+    position: absolute;
+    margin-left: -20px;
+    margin-top: 4px \9;
 }
 /* endCart */
