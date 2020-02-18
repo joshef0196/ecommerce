@@ -18,6 +18,8 @@ urlpatterns = [
     path('checkout/', views.checkout),
     path('order-success/', views.order_complete),
     path('single/', views.single_product),
-    # path('<str:cat_name>/<str:sub_cat>/', views.products_cat),
-    path('test/', views.products_cat),
+    path('<str:cat_name>/', views.products_cat),
+    path('<str:cat_name>/<str:sub_name>/', views.sub_products),
+    path('<str:cat_name>/<str:sub_name>/<str:sub_sub_name>/', views.sub_sub_products),
+    # path('test/', views.products_cat),
 ]

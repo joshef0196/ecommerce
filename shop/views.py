@@ -107,7 +107,33 @@ def single_product(request):
 
     return render(request,'shop/single_product.html')
  
-def products_cat(request):
+def products_cat(request, cat_name):
+    category          = cat_name.replace('-', ' ')
+    product_cat       = models.Products.objects.filter(cat_name__cat_name__cat_name = category, status = True).order_by('cat_name__cat_name__cat_name')
 
-    return render(request,'shop/products_cat.html')
+    context={
+        'product_cat':product_cat,
+    }
+    return render(request,'shop/products_cat.html', context)
  
+def sub_products(request, cat_name, sub_name):
+    category              = cat_name.replace('-', ' ')
+    sub_category          = sub_name.replace('-', ' ')
+    product_sub_cat       = models.Products.objects.filter(cat_name__cat_name__cat_name = category, cat_name__sub_category = sub_category, status = True).order_by('cat_name__sub_category')
+
+    context={
+        'product_sub_cat':product_sub_cat,
+    }
+    return render(request,'shop/sub_products.html', context)
+ 
+def sub_sub_products(request, cat_name, sub_name, sub_sub_name):
+    category              = cat_name.replace('-', ' ')
+    sub_category          = sub_name.replace('-', ' ')
+    sub_sub_category      = sub_sub_name.replace('-', ' ')
+    sub_sub_products      = models.Products.objects.filter(cat_name__cat_name__cat_name = category, cat_name__sub_category = sub_category, sub_cat_name__sub_category = sub_sub_category, status = True).order_by('id')
+
+    context={
+        'sub_sub_products':sub_sub_products,
+    }
+    return render(request,'shop/sub_sub_products.html', context)
+

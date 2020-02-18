@@ -126,21 +126,26 @@
 									{% regroup "1"|product_menu by cat_name.cat_name as product_category_list %}
 									{% for data in product_category_list  %}
 										<li class="hassubs">
-											<a href="#">{{ data.grouper }}<i class="fas fa-chevron-down"></i></a>
+										<a href="/{{data.grouper|str2url}}/">{{ data.grouper }}<i class="fas fa-chevron-down"></i></a>
 											<ul>
 												{% regroup data.list by cat_name as sub_cat_list %}
 												{% for cat in sub_cat_list %}
-													{% regroup cat.list by sub_cat_name as sub_cat_list %}
-													{% for br in sub_cat_list %}
+													{% regroup cat.list by sub_cat_name as sub_cat_name_list %}
+													{% for br in sub_cat_name_list %}
 														{% if br.grouper %}
-															<li>
-																<a href="#">{{ cat.grouper }} <i class="fas fa-angle-right"></i></a>
-																<ul>
-																	<li><a href="#">{{ br.grouper }}</a></li>
-																</ul>
-															</li>
+															{% if forloop.first %}
+																<li>
+																	<a href="/{{data.grouper|str2url}}/{{cat.grouper|str2url }}/">{{ cat.grouper }} <i class="fas fa-angle-right"></i></a>
+																	<ul>
+																	{% regroup cat.list by sub_cat_name as sub_cat_name_list %}
+																	{% for brbr in sub_cat_name_list %}
+																		<li><a href="/{{data.grouper|str2url}}/{{cat.grouper|str2url }}/{{brbr.grouper|str2url }}">{{ brbr.grouper }}</a></li>
+																	{% endfor %}
+																	</ul>
+																</li>
+															{% endif %}
 														{% else %}
-															<li><a href="#">{{ cat.grouper }}</a></li>
+															<li><a href="/{{data.grouper|str2url}}/{{cat.grouper|str2url }}/">{{ cat.grouper }}</a></li>
 														{% endif %}
 													{% endfor %}
 												{% endfor %}
