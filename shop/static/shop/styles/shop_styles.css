@@ -368,7 +368,7 @@
 .product_image
 {
 	width: 100%;
-	height: 115px;
+    height: 100%;
 }
 .product_image img
 {
@@ -627,7 +627,7 @@
 }
 .sidebar_categories
 {
-	margin-top: 37px;
+	margin-top: 10px;
 }
 .sidebar_categories li
 {
@@ -727,4 +727,5 @@
 {
 	color: #0e8ce4;
 }
+
 

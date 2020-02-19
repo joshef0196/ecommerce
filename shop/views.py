@@ -103,16 +103,24 @@ def order_complete(request):
 
     return render(request,'shop/account/order_complete.html')
 
-def single_product(request):
-
-    return render(request,'shop/single_product.html')
+def single_product(request, pro_name):
+    pro            = pro_name.replace('-', ' ')
+    single_pro     = models.Products.objects.filter(product_name = pro).first()
+    related_post   = models.Products.objects.filter(brand_name_id = single_pro.brand_name_id, status=True).exclude(product_name = pro).order_by('-id')[:6]
+    context={
+        'single_pro':single_pro,
+        'related_post':related_post,
+    }
+    return render(request,'shop/single_product.html', context)
  
 def products_cat(request, cat_name):
     category          = cat_name.replace('-', ' ')
     product_cat       = models.Products.objects.filter(cat_name__cat_name__cat_name = category, status = True).order_by('cat_name__cat_name__cat_name')
+    pro_brand         = models.Brands.objects.filter(status = True).order_by('brand_name')
 
     context={
         'product_cat':product_cat,
+        'pro_brand':pro_brand,
     }
     return render(request,'shop/products_cat.html', context)
  
@@ -120,9 +128,11 @@ def sub_products(request, cat_name, sub_name):
     category              = cat_name.replace('-', ' ')
     sub_category          = sub_name.replace('-', ' ')
     product_sub_cat       = models.Products.objects.filter(cat_name__cat_name__cat_name = category, cat_name__sub_category = sub_category, status = True).order_by('cat_name__sub_category')
+    pro_brand             = models.Brands.objects.filter(status = True).order_by('brand_name')
 
     context={
         'product_sub_cat':product_sub_cat,
+        'pro_brand':pro_brand,
     }
     return render(request,'shop/sub_products.html', context)
  

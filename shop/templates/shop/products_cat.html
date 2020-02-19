@@ -4,44 +4,45 @@
 {% block meta_keywords %} {{ emi.meta_keywords }} {% endblock %}
 {% block meta_title %} {{ emi.meta_title }} {% endblock %}
 {% load staticfiles %}
+{% load data_load %}
 {% block contain %}
 <head>
 	<link rel="stylesheet" type="text/css" href="{% static 'shop/styles/shop_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'shop/styles/store.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'shop/styles/shop_responsive.css' %}">
 </head>
 
 <div class="super_container">
-	<div class="home">
-		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="{% static 'shop/images/shop_background.jpg' %}"></div>
-		<div class="home_overlay"></div>
-		<div class="home_content d-flex flex-column align-items-center justify-content-center">
-			<h2 class="home_title">Smartphones & Tablets</h2>
-		</div>
-	</div>
-
-	<!-- Shop -->
-	<div class="shop">
+	<!-- SECTION -->
+	<div class="section">
+		<!-- container -->
 		<div class="container">
+			<!-- row -->
 			<div class="row">
-				<div class="col-lg-3">
-					<!-- Shop Sidebar -->
-					<div class="shop_sidebar">
-						<div class="sidebar_section">
-							<div class="sidebar_title">Categories</div>
-							<ul class="sidebar_categories">
-								<li><a href="#">Computers & Laptops</a></li>
-								<li><a href="#">Cameras & Photos</a></li>
-								<li><a href="#">Hardware</a></li>
-								<li><a href="#">Smartphones & Tablets</a></li>
-								<li><a href="#">TV & Audio</a></li>
-								<li><a href="#">Gadgets</a></li>
-								<li><a href="#">Car Electronics</a></li>
-								<li><a href="#">Video Games & Consoles</a></li>
-								<li><a href="#">Accessories</a></li>
-							</ul>
-						</div>
+				<!-- ASIDE -->
+				<div id="aside" class="col-md-3">
+					<!-- aside Widget -->
+					<div class="aside">
+						<h3 class="aside-title">Categories</h3>
+						{% regroup "1"|product_menu by cat_name.cat_name as product_category_list %}
+						{% for data in product_category_list  %}
+							<div class="checkbox-filter">
+								<div class="input-checkbox">
+									<input type="checkbox" id="category-1">
+									<label for="category-1">
+										<span></span>
+											{{ data.grouper}}
+										<small>(120)</small>
+									</label>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+					<!-- /aside Widget -->
+
+					<!-- aside Widget -->
+					<div class="aside">
 						<div class="sidebar_section filter_by_section">
-							<div class="sidebar_title">Filter By</div>
 							<div class="sidebar_subtitle">Price</div>
 							<div class="filter_price">
 								<div id="slider-range" class="slider_range"></div>
@@ -49,27 +50,33 @@
 								<p><input type="text" id="amount" class="amount" readonly style="border:0; font-weight:bold;"></p>
 							</div>
 						</div>
-						<div class="sidebar_section">
-							<div class="sidebar_subtitle brands_subtitle">Brands</div>
-							<ul class="brands_list">
-								<li class="brand"><a href="#">Apple</a></li>
-								<li class="brand"><a href="#">Beoplay</a></li>
-								<li class="brand"><a href="#">Google</a></li>
-								<li class="brand"><a href="#">Meizu</a></li>
-								<li class="brand"><a href="#">OnePlus</a></li>
-								<li class="brand"><a href="#">Samsung</a></li>
-								<li class="brand"><a href="#">Sony</a></li>
-								<li class="brand"><a href="#">Xiaomi</a></li>
-							</ul>
+					</div>
+					<!-- /aside Widget -->
+
+					<!-- aside Widget -->
+					<div class="aside">
+						<h3 class="aside-title">Brand</h3>
+						<div class="checkbox-filter">
+							{% for data in pro_brand %}
+								<div class="input-checkbox">
+									<input type="checkbox" id="brand-1">
+									<label for="brand-1">
+										<span></span>
+											{{ data.brand_name}}
+										<small>(578)</small>
+									</label>
+								</div>
+							{% endfor %}
 						</div>
 					</div>
-
+					<!-- /aside Widget -->
 				</div>
+				<!-- /ASIDE -->
 
-				<div class="col-lg-9">
-					
-					<!-- Shop Content -->
-					<div class="shop_content">
+				<!-- STORE -->
+				<div id="store" class="col-md-9">
+					<!-- store top filter -->
+					<div class="store-filter clearfix">
 						<div class="shop_bar clearfix">
 							<div class="shop_product_count"><span>186</span> products found</div>
 							<div class="shop_sorting">
@@ -86,183 +93,49 @@
 								</ul>
 							</div>
 						</div>
-
-						<div class="product_grid">
-							<div class="product_grid_border"></div>
-
-							<!-- Product Item -->
-							{% for data in product_cat %}
-								<div class="product_item is_new">
-									<div class="product_border"></div>
-									<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="/static/shop/media/{{ data.product_image1 }}" alt=""></div>
-									<div class="product_content">
-										<div class="product_price">{{ data.price }}</div>
-										<div class="product_name"><div><a href="#" tabindex="0">{{ data.product_name }}</a></div></div>
-									</div>
-									<div class="product_fav"><i class="fas fa-heart"></i></div>
-									<ul class="product_marks">
-										<li class="product_mark product_discount">-25%</li>
-										<li class="product_mark product_new">new</li>
-									</ul>
-								</div>
-							{% endfor %}
-						</div>
-
-						<!-- Shop Page Navigation -->
-						<div class="shop_page_nav d-flex flex-row">
-							<div class="page_prev d-flex flex-column align-items-center justify-content-center"><i class="fas fa-chevron-left"></i></div>
-							<ul class="page_nav d-flex flex-row">
-								<li><a href="#">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">...</a></li>
-								<li><a href="#">21</a></li>
-							</ul>
-							<div class="page_next d-flex flex-column align-items-center justify-content-center"><i class="fas fa-chevron-right"></i></div>
-						</div>
 					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+					<!-- /store top filter -->
 
-	<!-- Recently Viewed -->
-	<div class="viewed">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="viewed_title_container">
-						<h3 class="viewed_title">Recently Viewed</h3>
-						<div class="viewed_nav_container">
-							<div class="viewed_nav viewed_prev"><i class="fas fa-chevron-left"></i></div>
-							<div class="viewed_nav viewed_next"><i class="fas fa-chevron-right"></i></div>
-						</div>
+					<!-- store products -->
+					<div class="row">
+						<!-- product -->
+						{% for data in product_cat %}
+							<div class="col-md-4 col-xs-6">
+								<div class="product">
+									<div class="product-img">
+										<img src="/static/shop/media/{{ data.product_image1 }}" alt="">
+										<div class="product-label">
+											<span class="new">NEW</span>
+										</div>
+									</div>
+									<div class="product-body">
+										<p class="product-category">{{ data.brand_name }}</p>
+										<h3 class="product-name1"><a href="/{{data.product_name|str2url}}" title="{{ data.product_name }}">{{ data.product_name }}</a></h3>
+										<h4 class="product-price">{{ data.price }}৳ <del class="product-old-price">{{ data.regular_price }}৳</del></h4>
+										<div class="product-btns">
+											<button class="add-to-wishlist"><i class="far fa-heart"></i><span class="tooltipp">add to wishlist</span></button>
+											<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+										</div>
+									</div>
+									<div class="add-to-cart">
+										<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+						<div class="clearfix visible-sm visible-xs"></div>
 					</div>
+					<!-- /store products -->
 
-					<div class="viewed_slider_container">
-						
-						<!-- Recently Viewed Slider -->
-
-						<div class="owl-carousel owl-theme viewed_slider">
-							
-							<!-- Recently Viewed Item -->
-							<div class="owl-item">
-								<div class="viewed_item discount d-flex flex-column align-items-center justify-content-center text-center">
-									<div class="viewed_image"><img src="{% static 'shop/images/view_1.jpg' %}" alt=""></div>
-									<div class="viewed_content text-center">
-										<div class="viewed_price">$225<span>$300</span></div>
-										<div class="viewed_name"><a href="#">Beoplay H7</a></div>
-									</div>
-									<ul class="item_marks">
-										<li class="item_mark item_discount">-25%</li>
-										<li class="item_mark item_new">new</li>
-									</ul>
-								</div>
-							</div>
-
-							<!-- Recently Viewed Item -->
-							<div class="owl-item">
-								<div class="viewed_item d-flex flex-column align-items-center justify-content-center text-center">
-									<div class="viewed_image"><img src="{% static 'shop/images/view_2.jpg' %}" alt=""></div>
-									<div class="viewed_content text-center">
-										<div class="viewed_price">$379</div>
-										<div class="viewed_name"><a href="#">LUNA Smartphone</a></div>
-									</div>
-									<ul class="item_marks">
-										<li class="item_mark item_discount">-25%</li>
-										<li class="item_mark item_new">new</li>
-									</ul>
-								</div>
-							</div>
-
-							<!-- Recently Viewed Item -->
-							<div class="owl-item">
-								<div class="viewed_item d-flex flex-column align-items-center justify-content-center text-center">
-									<div class="viewed_image"><img src="{% static 'shop/images/view_3.jpg' %}" alt=""></div>
-									<div class="viewed_content text-center">
-										<div class="viewed_price">$225</div>
-										<div class="viewed_name"><a href="#">Samsung J730F...</a></div>
-									</div>
-									<ul class="item_marks">
-										<li class="item_mark item_discount">-25%</li>
-										<li class="item_mark item_new">new</li>
-									</ul>
-								</div>
-							</div>
-
-							<!-- Recently Viewed Item -->
-							<div class="owl-item">
-								<div class="viewed_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-									<div class="viewed_image"><img src="{% static 'shop/images/view_4.jpg' %}" alt=""></div>
-									<div class="viewed_content text-center">
-										<div class="viewed_price">$379</div>
-										<div class="viewed_name"><a href="#">Huawei MediaPad...</a></div>
-									</div>
-									<ul class="item_marks">
-										<li class="item_mark item_discount">-25%</li>
-										<li class="item_mark item_new">new</li>
-									</ul>
-								</div>
-							</div>
-
-							<!-- Recently Viewed Item -->
-							<div class="owl-item">
-								<div class="viewed_item discount d-flex flex-column align-items-center justify-content-center text-center">
-									<div class="viewed_image"><img src="{% static 'shop/images/view_5.jpg' %}" alt=""></div>
-									<div class="viewed_content text-center">
-										<div class="viewed_price">$225<span>$300</span></div>
-										<div class="viewed_name"><a href="#">Sony PS4 Slim</a></div>
-									</div>
-									<ul class="item_marks">
-										<li class="item_mark item_discount">-25%</li>
-										<li class="item_mark item_new">new</li>
-									</ul>
-								</div>
-							</div>
-
-							<!-- Recently Viewed Item -->
-							<div class="owl-item">
-								<div class="viewed_item d-flex flex-column align-items-center justify-content-center text-center">
-									<div class="viewed_image"><img src="{% static 'shop/images/view_6.jpg' %}" alt=""></div>
-									<div class="viewed_content text-center">
-										<div class="viewed_price">$375</div>
-										<div class="viewed_name"><a href="#">Speedlink...</a></div>
-									</div>
-									<ul class="item_marks">
-										<li class="item_mark item_discount">-25%</li>
-										<li class="item_mark item_new">new</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- Brands -->
-	<div class="brands">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="brands_slider_container">
-						<!-- Brands Slider -->
-						<div class="owl-carousel owl-theme brands_slider">
-							<div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="{% static 'shop/images/brands_1.jpg' %}" alt=""></div></div>
-							<div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="{% static 'shop/images/brands_2.jpg' %}" alt=""></div></div>
-							<div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="{% static 'shop/images/brands_3.jpg' %}" alt=""></div></div>
-							<div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="{% static 'shop/images/brands_4.jpg' %}" alt=""></div></div>
-							<div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="{% static 'shop/images/brands_5.jpg' %}" alt=""></div></div>
-							<div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="{% static 'shop/images/brands_6.jpg' %}" alt=""></div></div>
-							<div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="{% static 'shop/images/brands_7.jpg' %}" alt=""></div></div>
-							<div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="{% static 'shop/images/brands_8.jpg' %}" alt=""></div></div>
-
-						</div>
-						<!-- Brands Slider Navigation -->
-						<div class="brands_nav brands_prev"><i class="fas fa-chevron-left"></i></div>
-						<div class="brands_nav brands_next"><i class="fas fa-chevron-right"></i></div>
+					<!-- store bottom filter -->
+					<div class="store-filter clearfix">
+						<ul class="store-pagination">
+							<li class="active">1</li>
+							<li><a href="#">2</a></li>
+							<li><a href="#">3</a></li>
+							<li><a href="#">4</a></li>
+							<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+						</ul>
 					</div>
 				</div>
 			</div>

@@ -68,11 +68,10 @@
 												<i class="fas fa-chevron-down"></i>
 												<ul class="custom_list clc">
 													<li><a class="clc" href="#">All Categories</a></li>
-													<li><a class="clc" href="#">Computers</a></li>
-													<li><a class="clc" href="#">Laptops</a></li>
-													<li><a class="clc" href="#">Cameras</a></li>
-													<li><a class="clc" href="#">Hardware</a></li>
-													<li><a class="clc" href="#">Smartphones</a></li>
+													{% regroup "1"|product_menu by cat_name.cat_name as product_category_list %}
+													{% for data in product_category_list  %}
+														<li><a class="clc" href="#">{{data.grouper}}</a></li>
+													{% endfor %}
 												</ul>
 											</div>
 										</div>
@@ -126,7 +125,7 @@
 									{% regroup "1"|product_menu by cat_name.cat_name as product_category_list %}
 									{% for data in product_category_list  %}
 										<li class="hassubs">
-										<a href="/{{data.grouper|str2url}}/">{{ data.grouper }}<i class="fas fa-chevron-down"></i></a>
+											<a href="/{{data.grouper|str2url}}/">{{ data.grouper }}<i class="fas fa-chevron-down"></i></a>
 											<ul>
 												{% regroup data.list by cat_name as sub_cat_list %}
 												{% for cat in sub_cat_list %}
@@ -408,5 +407,6 @@
 <script src="{% static 'shop/plugins/Isotope/isotope.pkgd.min.js' %}"></script>
 <script src="{% static 'shop/plugins/jquery-ui-1.12.1.custom/jquery-ui.js' %}"></script>
 <script src="{% static 'shop/plugins/parallax-js-master/parallax.min.js' %}"></script>
+<script src="{% static 'shop/js/main.js' %}"></script>
 </body>
 </html>
