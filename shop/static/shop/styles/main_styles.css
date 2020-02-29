@@ -3163,7 +3163,7 @@ select option
 
 .viewed
 {
-	padding-top: 15px;
+	padding-top: 84px;
 	padding-bottom: 60px;
 	background: #eff6fa;
 }
@@ -3907,7 +3907,8 @@ h3.w3ls-title.w3ls-title1 {
 {
 	width: 100%;
 	padding: 15px;
-	padding-right: 46px;
+	padding-right: 20px;
+	border-bottom: 1px solid gray;
 }
 .cart_item_image
 {
@@ -3928,6 +3929,7 @@ h3.w3ls-title.w3ls-title1 {
 .cart_item_name
 {
 	margin-left: 7.53%;
+	width: 40%;
 }
 .cart_item_title
 {
@@ -4573,7 +4575,7 @@ h3.w3ls-title.w3ls-title1 {
 	background: #999999;
 	border-radius: 50%;
 }
-.product_color > li
+/* .product_color > li
 {
 	position: relative;
 	width: 100%;
@@ -4674,4 +4676,5 @@ h3.w3ls-title.w3ls-title1 {
 .product_fav.active i
 {
 	color: #df3b3b;
-}
+} */
+

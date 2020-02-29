@@ -16,11 +16,9 @@ class CompanyInfo(models.Model):
     facebook     = models.CharField(max_length=200, blank=True)
     twitter      = models.CharField(max_length=200, blank=True)
     linkedin     = models.CharField(max_length=200, blank=True)
-    pinterest    = models.CharField(max_length=200, blank=True)
-    instagram    = models.CharField(max_length=200, blank=True)
     skype        = models.CharField(max_length=200, blank=True)
     youtube      = models.CharField(max_length=200, blank=True)
-    com_details  = RichTextField()
+    com_details  = RichTextField(blank=True)
     status       = models.BooleanField(default=True)
 
     def __str__(self):
@@ -210,6 +208,36 @@ class Products(models.Model):
         verbose_name = 'Product'
         verbose_name_plural = 'All Products'
 
+class AddToCart(models.Model):
+    product_name  = models.ForeignKey(Products, on_delete=models.CASCADE)
+    ip_address    = models.CharField(max_length=50)
+    mac_address   = models.CharField(max_length=50)
+    qt_price      = models.IntegerField(default = 0)
+    quantity      = models.IntegerField(default = 1)
+    total_price   = models.IntegerField(default = 0)
+    cart_date     = models.DateTimeField(auto_now_add = True)
+    status        = models.BooleanField(default=1)
+    def __str__(self):
+        return str(self.product_name)
+    
+    class Meta:
+        verbose_name = 'Add To Cart'
+        verbose_name_plural = 'Cart List'
+
+class Wishlist(models.Model):
+    product_name  = models.ForeignKey(Products, on_delete=models.CASCADE)
+    ip_address    = models.CharField(max_length=50)
+    mac_address   = models.CharField(max_length=50)
+    total_price   = models.IntegerField(default = 0)
+    wish_date     = models.DateTimeField(auto_now_add = True)
+    status        = models.BooleanField(default=1)
+    def __str__(self):
+        return str(self.product_name)
+    
+    class Meta:
+        verbose_name = 'Wishlist'
+        verbose_name_plural = 'Wishlists'
+
 class UserRegistration(models.Model):
     user_name        = models.CharField(max_length=100, blank=True)
     user_email       = models.EmailField(unique = True)
@@ -364,3 +392,52 @@ class PrivacyPolicy(models.Model):
     class Meta:
         verbose_name = 'Privacy Policy'
         verbose_name_plural = 'Privacy Policy'
+
+class OfferProduct(models.Model):
+    product          = models.ForeignKey(Products, on_delete=models.CASCADE, blank=True)
+    title            = models.CharField(max_length = 200, blank = True)
+    description      = RichTextField()
+    thumbnail_image  = models.ImageField(upload_to='thumbnail_image', blank=True)
+    meta_description = models.TextField(blank = True)
+    meta_keywords    = models.TextField(blank = True)
+    meta_title       = models.TextField(blank = True)
+    status           = models.BooleanField(default = True)
+
+    def __str__(self):
+        return self.title 
+
+    class Meta:
+        verbose_name = 'Offer Product'
+        verbose_name_plural = 'Offer Products'
+
+
+class SeoContent(models.Model):
+    index_meta_title            = models.TextField(blank = True)
+    index_meta_description      = models.TextField(blank = True)
+    index_meta_keywords         = models.TextField(blank = True)
+    contact_us_title            = models.TextField(blank=True)
+    contact_us_description      = models.TextField(blank=True)
+    contact_us_keywords         = models.TextField(blank=True)
+    offer_product_title         = models.TextField(blank=True)
+    offer_product_description   = models.TextField(blank=True)
+    offer_product_keywords      = models.TextField(blank=True)
+    faq_title                   = models.TextField(blank=True)
+    faq_description             = models.TextField(blank=True)
+    faq_keywords                = models.TextField(blank=True)
+    login_title                 = models.TextField(blank=True)
+    login_description           = models.TextField(blank=True)
+    login_keywords              = models.TextField(blank=True)
+    reg_title                   = models.TextField(blank=True)
+    reg_description             = models.TextField(blank=True)
+    reg_keywords                = models.TextField(blank=True)
+    fogt_title                  = models.TextField(blank=True)
+    fogt_description            = models.TextField(blank=True)
+    fogt_keywords               = models.TextField(blank=True)
+    status                      = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.index_meta_title   
+
+    class Meta:
+        verbose_name = 'Seo Content'
+        verbose_name_plural = 'Seo Contentes'

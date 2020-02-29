@@ -5,6 +5,7 @@ urlpatterns = [
     path('', views.index),
     path('contact-us/', views.contact),
     path('about-us/', views.about_us),
+    path('account/register/', views.registration),
     path('emi-terms/', views.emi),
     path('warranty-policy/', views.warranty),
     path('payment-method/', views.payment_method),
@@ -22,4 +23,7 @@ urlpatterns = [
     path('<str:cat_name>/<str:sub_name>/', views.sub_products),
     path('<str:cat_name>/<str:sub_name>/<str:sub_sub_name>/', views.sub_sub_products),
     # path('test/', views.products_cat),
+    path('insert-newsletter', views.insert_newsletter), 
+    path('add-to-cart/<int:id>',views.add_to_cart),  
+    path('delete-cart/<int:id>',views.delete_to_cart),
 ]

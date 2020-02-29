@@ -85,6 +85,16 @@ class PrivacyPolicyAdmin(admin.ModelAdmin):
     search_fields   = ['title','status']
     list_filter     = ['title','status']
 
+class AddToCartAdmin(admin.ModelAdmin):
+    list_display    = ['product_name','quantity','total_price','status']
+    search_fields   = ['product_name__product_name','status']
+    list_filter     = ['cart_date','status']
+
+class WishlistAdmin(admin.ModelAdmin):
+    list_display    = ['product_name','status']
+    search_fields   = ['product_name__product_name','status']
+    list_filter     = ['wish_date','status']
+
 admin.site.register(models.CompanyInfo, CompanyInfoAdmin)
 admin.site.register(models.SubscriberNewslatter, SubscriberNewslatterAdmin)
 admin.site.register(models.SliderInfo, SliderInfoAdmin)
@@ -103,3 +113,7 @@ admin.site.register(models.PaymentMethod, PaymentMethodAdmin)
 admin.site.register(models.TermsConditions, TermsConditionsAdmin)
 admin.site.register(models.ReturnRefundPolicy, ReturnRefundPolicyAdmin)
 admin.site.register(models.PrivacyPolicy, PrivacyPolicyAdmin)
+admin.site.register(models.SeoContent)
+admin.site.register(models.OfferProduct)
+admin.site.register(models.AddToCart, AddToCartAdmin)
+admin.site.register(models.Wishlist,WishlistAdmin)

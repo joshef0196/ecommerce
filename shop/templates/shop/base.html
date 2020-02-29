@@ -3,6 +3,7 @@
 <head>
 	{% load data_load %}
 	{% load staticfiles %}
+	{% for com in company_details|company|slice:"1" %}
     <title>{% block title %} {% endblock %}</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,8 +31,8 @@
 			<div class="container">
 				<div class="row">
 					<div class="col d-flex flex-row">
-						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{% static 'shop/images/phone.png' %}" alt=""></div>+38 068 005 3570</div>
-						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{% static 'shop/images/mail.png' %}" alt=""></div><a href="mailto:fastsales@gmail.com">fastsales@gmail.com</a></div>
+						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{% static 'shop/images/phone.png' %}" alt=""></div>{{ com.mobile1 }}</div>
+						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{% static 'shop/images/mail.png' %}" alt=""></div><a href="mailto:{{ com.email1 }}">{{ com.email1 }}</a></div>
 						<div class="top_bar_content ml-auto">
 							<div class="top_bar_user">
 								<div class="user_icon"><img src="{% static 'shop/images/user.svg' %}" alt=""></div>
@@ -268,13 +269,10 @@
 						<div class="newsletter_title_container">
 							<div class="newsletter_icon"><img src="{% static 'shop/images/send.png' %}" alt=""></div>
 							<div class="newsletter_title">Sign up for Newsletter</div>
-							<div class="newsletter_text"><p>...and receive %20 coupon for first shopping.</p></div>
 						</div>
 						<div class="newsletter_content clearfix">
-							<form action="#" class="newsletter_form">
-								<input type="email" class="newsletter_input" required="required" placeholder="Enter your email address">
-								<button class="newsletter_button">Subscribe</button>
-							</form>
+							<input type="email" id="txt_subscribe" name="email" class="newsletter_input" required="required" placeholder="Enter your email address">
+							<button id="btn_subscribe" class="newsletter_button">Subscribe</button>
 						</div>
 					</div>
 				</div>
@@ -292,16 +290,15 @@
 							<div class="logo"><a href="#">OneTech</a></div>
 						</div>
 						<div class="footer_title">Got Question? Call Us 24/7</div>
-						<div class="footer_phone">+38 068 005 3570</div>
+						<div class="footer_phone">{{ com.mobile1 }}</div>
 						<div class="footer_contact_text">
-							<p>17 Princess Road, London</p>
-							<p>Grester London NW18JR, UK</p>
+							<p>{{ com.address }}</p>
 						</div>
 						<div class="footer_social">
 							<ul>
-								<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-								<li><a href="#"><i class="fab fa-twitter"></i></a></li>
-								<li><a href="#"><i class="fab fa-youtube"></i></a></li>
+								<li><a href="{{ com.facebook }}" target="__blank__"><i class="fab fa-facebook-f"></i></a></li>
+								<li><a href="{{ com.twitter }}" target="__blank__"><i class="fab fa-twitter"></i></a></li>
+								<li><a href="{{ com.youtube }}" target="__blank__"><i class="fab fa-youtube"></i></a></li>
 							</ul>
 						</div>
 					</div>
@@ -373,6 +370,7 @@
 	</div>
 </div>
 
+<script src="{% static 'shop/js/jquery-3.3.1.min.js' %}"></script>
 <script>
 	window.onscroll = function() {myFunction()};
 	var navbar = document.getElementById("navbar");
@@ -386,8 +384,25 @@
 		}
 	}
 </script>
+<script>
+	$("#btn_subscribe").click(function() {
+		$.ajax({
+			url: "/insert-newsletter",
+			type:'GET',
+			data : {
+				   email : $("#txt_subscribe").val()
+			},
+			success: function(data){
+				alert(data);
+				$("#txt_subscribe").val("");
+			},
+			error: function(data){
+				alert(data);
+			}
+		});
+	});
+</script>
 
-<script src="{% static 'shop/js/jquery-3.3.1.min.js' %}"></script>
 <script src="{% static 'shop/styles/bootstrap4/popper.js' %}"></script>
 <script src="{% static 'shop/styles/bootstrap4/bootstrap.min.js' %}"></script>
 <script src="{% static 'shop/plugins/greensock/TweenMax.min.js' %}"></script>
@@ -408,5 +423,8 @@
 <script src="{% static 'shop/plugins/jquery-ui-1.12.1.custom/jquery-ui.js' %}"></script>
 <script src="{% static 'shop/plugins/parallax-js-master/parallax.min.js' %}"></script>
 <script src="{% static 'shop/js/main.js' %}"></script>
+<script src="{% static 'shop/js/form.js' %}"></script>
+
 </body>
+{% endfor %}
 </html>
