@@ -398,6 +398,7 @@ class OfferProduct(models.Model):
     title            = models.CharField(max_length = 200, blank = True)
     description      = RichTextField()
     thumbnail_image  = models.ImageField(upload_to='thumbnail_image', blank=True)
+    validation       = models.CharField(max_length = 200,blank = True)
     meta_description = models.TextField(blank = True)
     meta_keywords    = models.TextField(blank = True)
     meta_title       = models.TextField(blank = True)

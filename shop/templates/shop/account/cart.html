@@ -33,36 +33,38 @@
 					<div class="cart_title">Shopping Cart</div>
 					<div class="cart_items">
 						<ul class="cart_list">
-							{% for data in cart_products %}
-								<li class="cart_item clearfix">
-									<div class="cart_item_image"><img src="{% static 'shop/images/shopping_cart.jpg' %}" alt=""></div>
-									<div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
-										<div class="cart_item_name cart_info_col">
-											{% if forloop.first %}<div class="cart_item_title">Name</div>{% endif %}
-											<div class="cart_item_text">{{ data.product_name}}</div>
-										</div>
-										<div class="cart_item_quantity cart_info_col">
-											{% if forloop.first %}<div class="cart_item_title">Quantity</div>{% endif %}
-											<div class="cart_item_text">{{ data.quantity}}</div>
-										</div>
-										<div class="cart_item_price cart_info_col">
-											{% if forloop.first %}<div class="cart_item_title">Unit Price</div>{% endif %}
-											<div class="cart_item_text">{{ data.qt_price}}৳</div>
-										</div>
-										<div class="cart_item_total cart_info_col">
-											{% if forloop.first %}<div class="cart_item_title" style="text-align: left;">Total</div>{% endif %}
-											<div class="cart_item_text">{{ data.total_price}}৳</div>
-										</div>
-										
-										<div class="cart_item_total cart_info_col">
-											{% if forloop.first %}<div class="cart_item_title">Remove</div>{% endif %}
-											<div class="cart_item_text">
-												<a href="/delete-cart/{{ data.id }}" class="closed" style="color:red;" title="Remove"><i class="fa fa-times" aria-hidden="true"></i></a>
+							{% if cart_products %}
+								{% for data in cart_products %}
+									<li class="cart_item clearfix">
+										<div class="cart_item_image"><img src="/static/shop/media/{{ data.product_name.product_image1 }}" alt=""></div>
+										<div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
+											<div class="cart_item_name cart_info_col">
+												{% if forloop.first %}<div class="cart_item_title">Name</div>{% endif %}
+												<div class="cart_item_text">{{ data.product_name}}</div>
+											</div>
+											<div class="cart_item_quantity cart_info_col">
+												{% if forloop.first %}<div class="cart_item_title">Quantity</div>{% endif %}
+												<div class="cart_item_text">{{ data.quantity}}</div>
+											</div>
+											<div class="cart_item_price cart_info_col">
+												{% if forloop.first %}<div class="cart_item_title">Unit Price</div>{% endif %}
+												<div class="cart_item_text">{{ data.qt_price}}৳</div>
+											</div>
+											<div class="cart_item_total cart_info_col">
+												{% if forloop.first %}<div class="cart_item_title" style="text-align: left;">Total</div>{% endif %}
+												<div class="cart_item_text">{{ data.total_price}}৳</div>
+											</div>
+											
+											<div class="cart_item_total cart_info_col">
+												{% if forloop.first %}<div class="cart_item_title">Remove</div>{% endif %}
+												<div class="cart_item_text">
+													<a href="/delete-cart/{{ data.id }}" class="closed" style="color:red;" title="Remove"><i class="fa fa-times" aria-hidden="true"></i></a>
+												</div>
 											</div>
 										</div>
-									</div>
-								</li>
-							{% endfor %}
+									</li>
+								{% endfor %}
+							{% endif %}
 						</ul>
 					</div>
 					
@@ -75,8 +77,8 @@
 					</div>
 
 					<div class="cart_buttons">
-						<button type="button" class="button cart_button_clear">Add to Cart</button>
-						<button type="button" class="button cart_button_checkout">Add to Cart</button>
+						<button type="button" class="button cart_button_clear">Continue Shopping</button>
+						<button type="button" class="button cart_button_checkout">Checkout</button>
 					</div>
 				</div>
 			</div>

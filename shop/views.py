@@ -11,6 +11,7 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 import datetime, hashlib, socket, string, os, re
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+import uuid 
 
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -25,11 +26,13 @@ def index(request):
     products_cat         = models.Products.objects.filter(status = True).order_by('cat_name__cat_name','ordering')
     popular_pro          = models.Products.objects.filter(status = True).order_by('ordering')
     recent_pro           = models.Products.objects.filter(status = True).order_by('-id')
+    check_addtocat       = models.AddToCart.objects.filter(status = True).order_by('-id')
     context = {
         'about_us'     : about_us,
         'products_cat' : products_cat,
         'popular_pro'  : popular_pro,
         'recent_pro'  : recent_pro,
+        'check_addtocat'  : check_addtocat,
     }
     return render(request,'shop/index.html', context)
  
@@ -45,8 +48,68 @@ def about_us(request):
     return render(request,'shop/about_us.html', context)
  
 def registration(request):
+    if request.method=="POST":
+        user_name    = request.POST['user_name']
+        email        = request.POST['email']
+        password     = request.POST['password']
+        mobile       = request.POST['mobile']
+        address      = request.POST['address']
+
+        new_md5_obj  = hashlib.md5(password.encode())
+        new_enc_pass = new_md5_obj.hexdigest()
+        chk_email = models.UserRegistration.objects.filter(user_email = email)
+        
+        if not chk_email:
+            models.UserRegistration.objects.create(user_name = user_name, user_email = email, user_password = new_enc_pass, user_mobile = mobile, address = address)
+            messages.success(request,'Thank you for registering.')
+            return redirect("/account/login/")
+        else :
+            messages.error(request,'Registration Fail.Please input valid value.')  
+            return redirect("/account/register/")
 
     return render(request,'shop/registration_form.html')
+ 
+def login(request):
+    if request.method=="POST":
+        email     = request.POST['email']
+        password  = request.POST['password']
+
+        new_md5_obj = hashlib.md5(password.encode())
+        enc_pass    = new_md5_obj.hexdigest()
+        user        = models.UserRegistration.objects.filter(user_email = email, user_password = enc_pass, status = True)
+        if user:
+            request.session['user_email']   = user[0].user_email
+            return redirect('/address-book/') 
+        else:
+            messages.error(request,"Email and Password incorrect.")  
+            return redirect('/account/login/') 
+
+    return render(request,'shop/login.html')
+
+def logout(request):  
+    request.session['user_email']  = False
+    return redirect('/account/login/')
+
+ 
+def my_address_book(request):
+    if not request.session['user_email']:
+        return redirect('/account/login/')
+
+    address = models.UserRegistration.objects.filter(status = True).first()
+    context = {
+        'address' : address,
+    }
+    return render(request,'shop/login.html', context)
+ 
+def order_history(request):
+    if not request.session['user_email']:
+        return redirect('/account/login/')
+        
+    emi = models.Emi.objects.filter(status = True).first()
+    context = {
+        'emi' : emi,
+    }
+    return render(request,'shop/order_history.html', context)
  
 def emi(request):
     emi = models.Emi.objects.filter(status = True).first()
@@ -54,7 +117,7 @@ def emi(request):
         'emi' : emi,
     }
     return render(request,'shop/emi.html', context)
- 
+
 def warranty(request):
     warranty = models.Warranty.objects.filter(status = True).first()
     context = {
@@ -91,11 +154,19 @@ def privacy_policy(request):
     return render(request,'shop/privacy_policy.html', context)
 
 def offers(request):
-    privacy_policy = models.PrivacyPolicy.objects.filter(status = True).first()
+    offer = models.OfferProduct.objects.filter(status = True)
     context = {
-        'privacy_policy' : privacy_policy,
+        'offer' : offer,
+        'seo_content' : models.SeoContent.objects.filter(status = True).first(),
     }
     return render(request,'shop/offers.html', context)
+
+def single_offers(request, id):
+    single_offer = models.OfferProduct.objects.filter(id = id).first()
+    context = {
+        'single_offer' : single_offer,
+    }
+    return render(request,'shop/single_offers.html', context)
 
 def faq(request):
     privacy_policy = models.PrivacyPolicy.objects.filter(status = True).first()
@@ -105,15 +176,15 @@ def faq(request):
     return render(request,'shop/faq.html', context)
 
 def wishlist(request):
-    privacy_policy = models.Wishlist.objects.filter(status = True).first()
     context = {
-        'privacy_policy' : privacy_policy,
+        'wish_products': models.Wishlist.objects.filter(ip_address__contains = get_client_ip(request), mac_address = hex(uuid.getnode())),
+        'total_price': models.Wishlist.objects.filter(ip_address__contains = get_client_ip(request)).aggregate(Sum('total_price'))['total_price__sum'],
     }
     return render(request,'shop/account/wishlist.html', context)
 
 def cart_list(request):
     context = {
-        'cart_products': models.AddToCart.objects.filter(ip_address__contains = get_client_ip(request)),
+        'cart_products': models.AddToCart.objects.filter(ip_address__contains = get_client_ip(request), mac_address = hex(uuid.getnode())),
         'total_price': models.AddToCart.objects.filter(ip_address__contains = get_client_ip(request)).aggregate(Sum('total_price'))['total_price__sum'],
     }
     return render(request,'shop/account/cart.html', context)
@@ -124,9 +195,18 @@ def add_to_cart(request, id):
     if cart:
         models.AddToCart.objects.filter(id = cart[0].id).update(quantity = F('quantity') + 1 , total_price = F('total_price') + cart[0].qt_price)
     else:    
-        models.AddToCart.objects.create(product_name_id = id, qt_price = product.price, total_price = product.price, ip_address = get_client_ip(request))
+        models.AddToCart.objects.create(product_name_id = id, mac_address = hex(uuid.getnode()), qt_price = product.price, total_price = product.price, ip_address = get_client_ip(request))
 
-    return redirect("/")   
+    return redirect("/")  
+
+def add_to_wish(request, id):
+    product     = models.Products.objects.get(id = id)
+    models.Wishlist.objects.create(product_name_id = id, total_price = product.price, mac_address = hex(uuid.getnode()), ip_address = get_client_ip(request))
+    return redirect("/")  
+
+def delete_to_wish(request, id):
+    models.Wishlist.objects.filter(id = id).delete()
+    return redirect("/wishlist/")    
 
 def delete_to_cart(request, id):
     models.AddToCart.objects.filter(id = id).delete()

@@ -8,39 +8,48 @@
             <div class="row row-pb-md">
                 <div class="col-md-1 ">
                 </div>
-                <div class="col-md-10 col-md-offset-1">
-                    <div class="product-name">
-                        <div class="one-forth text-center">
-                            <span>Product Name</span>
+                {% if wish_products %}
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="product-name">
+                            <div class="one-forth text-center">
+                                <span>Product Name</span>
+                            </div>
+                            <div class="one-eight text-center">
+                                <span>Unit Price</span>
+                            </div>
+                            <div class="one-eight text-center">
+                                <span>Remove</span>
+                            </div>
                         </div>
-                        <div class="one-eight text-center">
-                            <span>Price</span>
-                        </div>
-                        <div class="one-eight text-center">
-                            <span>Remove</span>
-                        </div>
-                    </div>
 
-                    <div class="product-cart">
-                        <div class="one-forth">
-                            <div class="product-img" style="background-image: url({% static 'shop/images/item-6.jpg' %});">
+                        {% for data in wish_products %}
+                            <div class="product-cart">
+                                <div class="one-forth">
+                                    <div class="product-img" style="background-image: url(/static/shop/media/{{ data.product_name.product_image1 }});">
+                                    </div>
+                                    <div class="display-tc">
+                                        <h3>{{ data.product_name }}</h3>
+                                    </div>
+                                </div>
+                                <div class="one-eight text-center">
+                                    <div class="display-tc">
+                                        <span class="price">৳{{ data.product_name.price }}</span>
+                                    </div>
+                                </div>
+                                <div class="one-eight text-center">
+                                    <div class="display-tc">
+                                        <a href="/delete-wish/{{ data.id }}" class="closed"></a>
+                                    </div>
+                                </div>
+                                <div class="one-eight text-center">
+                                    <div class="display-tc">
+                                        <a href="/add-to-cart/{{data.product_name.id}}"> <button type="button" class="button cart_button_checkout">Add to Cart</button> </a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="display-tc">
-                                <h3>Product Name</h3>
-                            </div>
-                        </div>
-                        <div class="one-eight text-center">
-                            <div class="display-tc">
-                                <span class="price">$68.00</span>
-                            </div>
-                        </div>
-                        <div class="one-eight text-center">
-                            <div class="display-tc">
-                                <a href="#" class="closed"></a>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
-                </div>
+                {% endif %}
             </div>
         </div>
     </div>

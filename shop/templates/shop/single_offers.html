@@ -1,0 +1,22 @@
+{% extends 'shop/base.html' %}
+{% block title %} {{ single_offer.meta_title }} {% endblock %}
+{% block meta_description %} {{ single_offer.meta_description }} {% endblock %}
+{% block meta_keywords %} {{ single_offer.meta_keywords }} {% endblock %}
+{% block meta_title %} {{ single_offer.meta_title }} {% endblock %}
+{% load staticfiles %}
+{% load data_load %}
+{% block contain %}
+    <div class="wthree-offers">
+		<div class="container">
+			<h3 class="w3ls-title w3ls-title1">Computer Care Tech Offers</h3>
+			<div class="offer-bottom row"> 
+				<div class="col-md-6 offer-bottom-grids">
+					<h4 style="color:black;">{{ single_offer.title }}</h4>
+					<h6>{{ single_offer.description|safe }}</h6>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+    </br>
+{% endblock %}

@@ -36,8 +36,12 @@
 						<div class="top_bar_content ml-auto">
 							<div class="top_bar_user">
 								<div class="user_icon"><img src="{% static 'shop/images/user.svg' %}" alt=""></div>
-								<div><a href="#">Register</a></div>
-								<div><a href="#">Sign in</a></div>
+								<div><a href="/account/register/">Register</a></div>
+								{% if request.session.user_email %}
+									<div><a href="/account/logout/">Sign out</a></div>
+								{% else %}
+									<div><a href="/account/login/">Sign in</a></div>
+								{% endif %}
 							</div>
 						</div>
 					</div>
@@ -90,7 +94,7 @@
 								<div class="wishlist_icon"><img src="{% static 'shop/images/heart.png' %}" alt=""></div>
 								<div class="wishlist_content">
 									<div class="wishlist_text"><a href="/wishlist/">Wishlist</a></div>
-									<div class="wishlist_count">115</div>
+									<div class="wishlist_count">{{count_wish_list|count_wish}}</div>
 								</div>
 							</div>
 
@@ -99,11 +103,11 @@
 								<div class="cart_container d-flex flex-row align-items-center justify-content-end">
 									<div class="cart_icon">
 										<img src="{% static 'shop/images/cart.png' %}" alt="">
-										<div class="cart_count"><span>10</span></div>
+										<div class="cart_count"><span>{{count_cart_list|count_cart}}</span></div>
 									</div>
 									<div class="cart_content">
 										<div class="cart_text"><a href="/cart-list/">Cart</a></div>
-										<div class="cart_price">$85</div>
+										<div class="cart_price">{{total_cart_amount|cart_amount}}৳</div>
 									</div>
 								</div>
 							</div>
@@ -319,9 +323,9 @@
 					<div class="footer_column">
 						<div class="footer_title">MY ACCOUNT</div>
 						<ul class="footer_list">
-							<li><a href="#">Order History</a></li>
+							<li><a href="/order-history/">Order History</a></li>
 							<li><a href="#">My Account</a></li>
-							<li><a href="#">Login</a></li>
+							<li><a href="/account/login/">Login</a></li>
 							<li><a href="/cart-list/">My Cart</a></li>
 							<li><a href="/wishlist/">Wish List</a></li>
 						</ul>
@@ -342,6 +346,28 @@
 						</ul>
 					</div>
 				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-3 footer_col">
+				</div>
+				{% for data in branch_details|branch_list %}
+				<div class="col-lg-3">
+					<div class="contact_info_container justify-content-between align-items-between">
+						<div class="contact_info_item d-flex flex-row align-items-center justify-content-start">
+							<div class="contact_info_content">
+								<div class="contact_info_title">{{ data.branch_name }}</div>
+								{% if data.mobile1 %}<div class="contact_info_text">{{ data.mobile1 }}</div>{% endif %}
+								{% if data.mobile2 %}<div class="contact_info_text">{{ data.mobile2 }}</div>{% endif %}
+								{% if data.address %}<div class="contact_info_text">{{ data.address }}</div>{% endif %}
+								{% if data.email1 %}<div class="contact_info_text">{{ data.email1 }}</div>{% endif %}
+								{% if data.email2 %}<div class="contact_info_text">{{ data.email2 }}</div>{% endif %}
+								<div class="contact_info_text" style="color:red;">{{ data.off_day }} Closed</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
 			</div>
 		</div>
 	</footer>

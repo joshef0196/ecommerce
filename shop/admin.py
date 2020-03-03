@@ -86,12 +86,12 @@ class PrivacyPolicyAdmin(admin.ModelAdmin):
     list_filter     = ['title','status']
 
 class AddToCartAdmin(admin.ModelAdmin):
-    list_display    = ['product_name','quantity','total_price','status']
+    list_display    = ['mac_address','product_name','quantity','total_price','status']
     search_fields   = ['product_name__product_name','status']
     list_filter     = ['cart_date','status']
 
 class WishlistAdmin(admin.ModelAdmin):
-    list_display    = ['product_name','status']
+    list_display    = ['mac_address','product_name','status']
     search_fields   = ['product_name__product_name','status']
     list_filter     = ['wish_date','status']
 

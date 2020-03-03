@@ -54,13 +54,7 @@
 								<button class="add-to-cart-btn1"><i class="fa fa-shopping-cart"></i> add to cart</button>
 							</div>
 							<ul class="product-btns1">
-								<li><a href="#"><i class="far fa-heart"></i> add to wishlist</a></li>
-							</ul>
-
-							<ul class="product-links1">
-								<li>Category:</li>
-								<li><a href="#">Headphones</a></li>
-								<li><a href="#">Accessories</a></li>
+								<li><a href="/add-to-wish/{{single_pro.id}}"><i class="far fa-heart"></i> add to wishlist</a></li>
 							</ul>
 							<ul class="product-links1">
 								<li>Share:</li>
@@ -70,6 +64,46 @@
 						</form>
 					</div>
 				</div>
+			</div>
+		</div>
+		</br>
+		<div class="row">
+			<!-- Selected Image -->
+			<div class="col-lg-10">
+				<table class="table table-bordered">
+					<tbody>
+						{% if single_pro.feature1_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature1_title }}</b></td><td class="techSpecTD2">{{ single_pro.feature1 }}</td></tr>{% endif %}
+						{% if single_pro.feature2_title %} <tr class="techSpecRow"><td class="techSpecTD1 TD1" style="color:#076d6d;"><b>{{ single_pro.feature2_title }}</b> </td><td class="techSpecTD2">{{ single_pro.feature2 }}</td></tr>{% endif %}
+						{% if single_pro.feature3_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature3_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature3 }}</td></tr>{% endif %}
+						{% if single_pro.feature4_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature4_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature4 }}</td></tr>{% endif %}
+						{% if single_pro.feature5_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature5_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature5 }}</td></tr>{% endif %}
+						{% if single_pro.feature6_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature6_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature6 }}</td></tr>{% endif %}
+						{% if single_pro.feature7_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature7_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature7 }}</td></tr>{% endif %}
+						{% if single_pro.feature8_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature8_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature8 }}</td></tr>{% endif %}
+						{% if single_pro.feature9_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature9_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature9 }}</td></tr>{% endif %}
+						{% if single_pro.feature10_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature10_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature10 }}</td></tr>{% endif %}
+						{% if single_pro.feature11_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature11_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature11 }}</td></tr>{% endif %}
+						{% if single_pro.feature12_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature12_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature12 }}</td></tr>{% endif %}
+						{% if single_pro.feature13_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature13_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature13 }}</td></tr>{% endif %}
+						{% if single_pro.feature14_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature14_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature14 }}</td></tr>{% endif %}
+						{% if single_pro.feature15_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature15_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature15 }}</td></tr>{% endif %}
+						{% if single_pro.feature16_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature16_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature16 }}</td></tr>{% endif %}
+						{% if single_pro.feature17_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature17_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature17 }}</td></tr>{% endif %}
+						{% if single_pro.feature18_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature18_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature18 }}</td></tr>{% endif %}
+						{% if single_pro.feature19_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature19_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature19 }}</td></tr>{% endif %}
+						{% if single_pro.feature20_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature20_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature20 }}</td></tr>{% endif %}
+						{% if single_pro.feature21_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature21_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature21 }}</td></tr>{% endif %}
+						{% if single_pro.feature22_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature22_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature22 }}</td></tr>{% endif %}
+						{% if single_pro.feature23_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature23_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature23 }}</td></tr>{% endif %}
+						{% if single_pro.feature24_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature24_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature24 }}</td></tr>{% endif %}
+						{% if single_pro.feature25_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature25_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature25 }}</td></tr>{% endif %}
+						{% if single_pro.feature26_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature26_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature26 }}</td></tr>{% endif %}
+						{% if single_pro.feature27_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature27_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature27 }}</td></tr>{% endif %}
+						{% if single_pro.feature28_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature28_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature28 }}</td></tr>{% endif %}
+						{% if single_pro.feature29_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature29_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature29 }}</td></tr>{% endif %}
+						{% if single_pro.feature30_title %} <tr class="techSpecRow"><td class="techSpecTD1" style="color:#076d6d;"><b>{{ single_pro.feature30_title }} </b> </td><td class="techSpecTD2">{{ single_pro.feature30 }}</td></tr>{% endif %}
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
@@ -105,7 +139,7 @@
 							</div>
 						</div>
 						<div class="add-to-cart">
-							<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+							<a href="/add-to-cart/{{data.id}}"><button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button></a>
 						</div>
 					</div>
 				</div>
