@@ -714,12 +714,11 @@ select
 {
 	display: inline;
 	border: 0;
-	width: auto;
-	margin-left: 10px;
+	width: 114.5% !important;
+	margin-left: -25px;
+	border: 0px solid #ced4da !important;
 	outline: none;
-	-webkit-appearance: none;
 	-moz-appearance: none;
-	border-bottom: 2px solid #555;
 	color: #7b00ff;
 	-webkit-transition: all .4s ease-in-out;
 	transition: all .4s ease-in-out;

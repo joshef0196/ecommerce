@@ -111,14 +111,15 @@
                     <h2>Cart Total</h2>
                     <ul>
                         <li>
-                            <span>Subtotal</span> <span>$100.00</span>
+                            <span>Subtotal</span> <span>{{ total_price }}</span>
                             <ul>
-                                <li><span>1 x Product Name</span> <span>$99.00</span></li>
-                                <li><span>1 x Product Name</span> <span>$78.00</span></li>
+                                {% for data in cart_list %}
+                                    <li><span>{{ data.product_name}} Qty({{ data.quantity}})</span> <span>{{ data.total_price}}</span></li>
+                                {% endfor %}
                             </ul>
                         </li>
-                        <li><span>Shipping</span> <span>$0.00</span></li>
-                        <li><span>Order Total</span> <span>$180.00</span></li>
+                        <li><span>Shipping</span> <span>100.00 TK.</span></li>
+                        <li><span>Grand Total</span> <span>{{ total_price|add:"100" }} TK.</span></li>
                     </ul>
                 </div>
 

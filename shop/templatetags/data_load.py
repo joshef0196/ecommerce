@@ -24,17 +24,17 @@ def category_menu(request):
 
 @register.filter(name='count_cart')
 def count_cart_list(request):
-    cart = models.AddToCart.objects.filter(ip_address__contains = socket.gethostbyname(socket.gethostname()), mac_address = hex(uuid.getnode())).count()
+    cart = models.AddToCart.objects.filter(mac_address = hex(uuid.getnode())).count()
     return cart
 
 @register.filter(name='cart_amount')
 def total_cart_amount(request):
-    amount = models.AddToCart.objects.filter(ip_address__contains = socket.gethostbyname(socket.gethostname()), mac_address = hex(uuid.getnode())).aggregate(Sum('total_price'))['total_price__sum']
+    amount = models.AddToCart.objects.filter(ip_address = socket.gethostbyname(socket.gethostname()), mac_address = hex(uuid.getnode())).aggregate(Sum('total_price'))['total_price__sum']
     return amount
 
 @register.filter(name='count_wish')
 def count_wish_list(request):
-    wish = models.Wishlist.objects.filter(ip_address__contains = socket.gethostbyname(socket.gethostname()), mac_address = hex(uuid.getnode())).count()
+    wish = models.Wishlist.objects.filter(ip_address = socket.gethostbyname(socket.gethostname()), mac_address = hex(uuid.getnode())).count()
     return wish
 
 @register.filter(name='str2url')

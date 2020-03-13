@@ -8,8 +8,9 @@ class CompanyInfoAdmin(admin.ModelAdmin):
     list_filter     = ['status']
 
 class SubscriberNewslatterAdmin(admin.ModelAdmin):
-    list_display    = ['subscriber_email']
+    list_display    = ['subscriber_email', 'subscirbe_date']
     search_fields   = ['subscriber_email']
+    date_hierarchy = 'subscirbe_date'
 
 class SliderInfoAdmin(admin.ModelAdmin):
     list_display    = ['slider_name']
@@ -95,6 +96,10 @@ class WishlistAdmin(admin.ModelAdmin):
     search_fields   = ['product_name__product_name','status']
     list_filter     = ['wish_date','status']
 
+class AddressBookAdmin(admin.ModelAdmin):
+    list_display    = ['user','status']
+    search_fields   = ['user__user_name','status']
+
 admin.site.register(models.CompanyInfo, CompanyInfoAdmin)
 admin.site.register(models.SubscriberNewslatter, SubscriberNewslatterAdmin)
 admin.site.register(models.SliderInfo, SliderInfoAdmin)
@@ -117,3 +122,4 @@ admin.site.register(models.SeoContent)
 admin.site.register(models.OfferProduct)
 admin.site.register(models.AddToCart, AddToCartAdmin)
 admin.site.register(models.Wishlist,WishlistAdmin)
+admin.site.register(models.AddressBook,AddressBookAdmin)

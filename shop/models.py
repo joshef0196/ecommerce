@@ -19,6 +19,7 @@ class CompanyInfo(models.Model):
     skype        = models.CharField(max_length=200, blank=True)
     youtube      = models.CharField(max_length=200, blank=True)
     com_details  = RichTextField(blank=True)
+    glg_map      = models.TextField(blank=True)
     status       = models.BooleanField(default=True)
 
     def __str__(self):
@@ -42,7 +43,6 @@ class SubscriberNewslatter(models.Model):
 class SliderInfo(models.Model):
     slider_name   = models.CharField(max_length=100, blank=True)
     title1        = models.CharField(max_length=200, blank=True)
-    title2        = models.CharField(max_length=200, blank=True)
     slider_images = models.ImageField(upload_to='images/slider')
     upload_date   = models.DateTimeField(auto_now_add=True)
     slider_order  = models.IntegerField()
@@ -253,6 +253,19 @@ class UserRegistration(models.Model):
         verbose_name = 'User Registration'
         verbose_name_plural = 'Users Registration'
 
+class AddressBook(models.Model):
+    user          = models.ForeignKey(UserRegistration, on_delete=models.CASCADE)
+    city          = models.CharField(max_length=50)
+    area          = models.CharField(max_length=50)
+    status        = models.BooleanField(default=1)
+
+    def __str__(self):
+        return str(self.user)
+    
+    class Meta:
+        verbose_name = 'Address Book'
+        verbose_name_plural = 'Address Books'
+
 class Branches(models.Model):
     branch_name      = models.CharField(max_length=100)
     proprietor_name  = models.CharField(max_length=50, blank=True)
@@ -272,9 +285,9 @@ class Branches(models.Model):
         verbose_name_plural = 'Branches'
 
 class ContactUs(models.Model):
-    customer_name = models.CharField(max_length=30)
-    email_address = models.EmailField(max_length=70)
-    subject       = models.CharField(max_length=150)
+    customer_name = models.CharField(max_length=30, blank=True)
+    email_address = models.EmailField(max_length=70, blank=True)
+    subject       = models.CharField(max_length=150, blank=True)
     message       = models.TextField()
     ip_address    = models.CharField(max_length=20, blank=True)
     mobile        = models.CharField(max_length=15)

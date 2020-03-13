@@ -1,8 +1,8 @@
 {% extends 'shop/base.html' %}
-{% block title %} {{ emi.meta_title }} {% endblock %}
-{% block meta_description %} {{ emi.meta_description }} {% endblock %}
-{% block meta_keywords %} {{ emi.meta_keywords }} {% endblock %}
-{% block meta_title %} {{ emi.meta_title }} {% endblock %}
+{% block title %} {{ product_sub_seo.cat_name.meta_title }} {% endblock %}
+{% block meta_description %} {{ product_sub_seo.cat_name.meta_description }} {% endblock %}
+{% block meta_keywords %} {{ product_sub_seo.cat_name.meta_keywords }} {% endblock %}
+{% block meta_title %} {{ product_sub_seo.cat_name.meta_title }} {% endblock %}
 {% load staticfiles %}
 {% load data_load %}
 {% block contain %}

@@ -1,8 +1,8 @@
 {% extends 'shop/base.html' %}
-{% block title %} {{ sub_sub_seo.sub_cat_name.meta_title }} {% endblock %}
-{% block meta_description %} {{ sub_sub_seo.sub_cat_name.meta_description }} {% endblock %}
-{% block meta_keywords %} {{ sub_sub_seo.sub_cat_name.meta_keywords }} {% endblock %}
-{% block meta_title %} {{ sub_sub_seo.sub_cat_name.meta_title }} {% endblock %}
+{% block title %} {{ emi.meta_title }} {% endblock %}
+{% block meta_description %} {{ emi.meta_description }} {% endblock %}
+{% block meta_keywords %} {{ emi.meta_keywords }} {% endblock %}
+{% block meta_title %} {{ emi.meta_title }} {% endblock %}
 {% load staticfiles %}
 {% load data_load %}
 {% block contain %}
@@ -99,7 +99,7 @@
 					<!-- store products -->
 					<div class="row">
 						<!-- product -->
-						{% for data in sub_sub_products %}
+						{% for data in product_list %}
 							<div class="col-md-4 col-xs-6">
 								<div class="product">
 									<div class="product-img">

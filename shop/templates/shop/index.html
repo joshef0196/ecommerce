@@ -1,5 +1,8 @@
 {% extends 'shop/base.html' %}
-{% block title %} Ecommerce {% endblock %}
+{% block title %} {{ seo_content.index_meta_title }} {% endblock %}
+{% block meta_description %} {{ seo_content.index_meta_description }} {% endblock %}
+{% block meta_keywords %} {{ seo_content.index_meta_keywords }} {% endblock %}
+{% block meta_title %} {{ seo_content.index_meta_title }} {% endblock %}
 {% load staticfiles %}
 {% load data_load %}
 {% block contain %}
@@ -10,80 +13,28 @@
             <!-- Banner 2 Slider -->
             <div class="owl-carousel owl-theme banner_2_slider">
                 <!-- Banner 2 Slider Item -->
-                <div class="owl-item">
-                    <div class="banner_2_item">
-                        <div class="container fill_height">
-                            <div class="row fill_height">
-                                <div class="col-lg-4 col-md-6 fill_height">
-                                    <div class="banner_2_content">
-                                        <div class="banner_2_category">Laptops</div>
-                                        <div class="banner_2_title">MacBook Air 13</div>
-                                        <div class="banner_2_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum laoreet.</div>
-                                        <div class="rating_r rating_r_4 banner_2_rating"><i></i><i></i><i></i><i></i><i></i></div>
-                                        <div class="button banner_2_button"><a href="#">Explore</a></div>
+                {% for data in slider %}
+                    <div class="owl-item">
+                        <div class="banner_2_item">
+                            <div class="container fill_height">
+                                <div class="row fill_height">
+                                    <div class="col-lg-4 col-md-6 fill_height">
+                                        <div class="banner_2_content">
+                                            <div class="banner_2_title">{{ data.slider_name }}</div>
+                                            <div class="banner_2_text">{{ data.title1 }}</div>
+                                        </div>
+                                        
                                     </div>
-                                    
-                                </div>
-                                <div class="col-lg-8 col-md-6 fill_height">
-                                    <div class="banner_2_image_container">
-                                        <div class="banner_2_image"><img src="{% static 'shop/images/banner_2_product.png ' %}" alt=""></div>
+                                    <div class="col-lg-8 col-md-6 fill_height">
+                                        <div class="banner_2_image_container">
+                                            <div class="banner_2_image"><img src="/static/shop/media/{{ data.slider_images }}" alt=""></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>			
+                            </div>			
+                        </div>
                     </div>
-                </div>
-
-                <!-- Banner 2 Slider Item -->
-                <div class="owl-item">
-                    <div class="banner_2_item">
-                        <div class="container fill_height">
-                            <div class="row fill_height">
-                                <div class="col-lg-4 col-md-6 fill_height">
-                                    <div class="banner_2_content">
-                                        <div class="banner_2_category">Laptops</div>
-                                        <div class="banner_2_title">MacBook Air 13</div>
-                                        <div class="banner_2_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum laoreet.</div>
-                                        <div class="rating_r rating_r_4 banner_2_rating"><i></i><i></i><i></i><i></i><i></i></div>
-                                        <div class="button banner_2_button"><a href="#">Explore</a></div>
-                                    </div>
-                                    
-                                </div>
-                                <div class="col-lg-8 col-md-6 fill_height">
-                                    <div class="banner_2_image_container">
-                                        <div class="banner_2_image"><img src="{% static 'shop/images/banner_2_product.png ' %}" alt=""></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>			
-                    </div>
-                </div>
-
-                <!-- Banner 2 Slider Item -->
-                <div class="owl-item">
-                    <div class="banner_2_item">
-                        <div class="container fill_height">
-                            <div class="row fill_height">
-                                <div class="col-lg-4 col-md-6 fill_height">
-                                    <div class="banner_2_content">
-                                        <div class="banner_2_category">Laptops</div>
-                                        <div class="banner_2_title">MacBook Air 13</div>
-                                        <div class="banner_2_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum laoreet.</div>
-                                        <div class="rating_r rating_r_4 banner_2_rating"><i></i><i></i><i></i><i></i><i></i></div>
-                                        <div class="button banner_2_button"><a href="#">Explore</a></div>
-                                    </div>
-                                    
-                                </div>
-                                <div class="col-lg-8 col-md-6 fill_height">
-                                    <div class="banner_2_image_container">
-                                        <div class="banner_2_image"><img src="{% static 'shop/images/banner_2_product.png ' %}" alt=""></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>			
-                    </div>
-                </div>
-
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -131,7 +82,7 @@
                                                         </div>
                                                         <a href="/add-to-wish/{{data.id}}"><div class="product_fav"><i class="fas fa-heart"></i></div></a>
                                                         <ul class="product_marks">
-                                                            <li class="product_mark product_discount">-25%</li>
+                                                            {% comment %} <li class="product_mark product_discount">-25%</li> {% endcomment %}
                                                             <li class="product_mark product_new">new</li>
                                                         </ul>
                                                     </div>

@@ -1,57 +1,53 @@
 {% extends 'shop/base.html' %}
-{% block title %} {{ warranty.meta_title }} {% endblock %}
-{% block meta_description %} {{ warranty.meta_description }} {% endblock %}
-{% block meta_keywords %} {{ warranty.meta_keywords }} {% endblock %}
-{% block meta_title %} {{ warranty.meta_title }} {% endblock %}
+{% block title %} Order History {% endblock %}
 {% load staticfiles %}
 {% block contain %}
     <section class="testimonial py-5" id="testimonial">
         <div class="container">
             <div class="row ">
-                <div class="col-md-4 py-5 border bg-gray text-black text-center ">
+                <div class="col-md-3 py-5 border bg-gray text-black text-center ">
                     <div class=" ">
                         <div class="list-group category_nav">
                            <a href="/account/login/" class="list-group-item">Login</a>
                            <a href="/account/register/" class="list-group-item">Register</a>
                            <a href="https://www.startech.com.bd/account/register" class="list-group-item">Forgotten Password</a>
                            <a href="https://www.startech.com.bd/account/register" class="list-group-item">My Account</a>
-                           <a href="https://www.startech.com.bd/account/register" class="list-group-item">Address Book</a>
-                           <a href="/wishlist/" class="list-group-item">Wish List</a>
+                           <a href="/address-book/" class="list-group-item">Address Book</a>
                            <a href="/order-history/" class="list-group-item">Order History</a>
+                           <a href="/account/logout/" class="list-group-item">Sign out</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8 py-5 border">
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="alert {{ message.tags }} alert-dismissible" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {% if message.tags %} <h4><i class="icon fa fa-check"></i> {{ message }}</h4>{% endif %}
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-                    <h4 class="pb-4" >Customer Login</h4><hr>
-                    <form method="POST" >{% csrf_token %}
-                        <div class="row">
-                            <div class="col-md-10">
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <input type="email" name="email" class="form-control" id="inputEmail4" placeholder="Email">
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <input type="password" name="password" class="form-control" id="inputEmail4" placeholder="Password">
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <button type="submit" class="btn btn-success">login</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    <a href="/account/login/" >I forgot my password</a><br>
-                    <a href="/account/register/"  class="text-center w3-text-red">New Customer</a>
+                <div class="col-md-9 py-5 border">
+                    <div class="box-body">
+						<table class="table table-bordered table-striped table-hover">
+							<thead>
+								<tr>
+								   	<th>Product Code</th>
+								   	<th>Product Name</th>
+								   	<th>Brand</th>
+				   					<th>Quantity</th>
+									<th>Price</th>
+									<th>Product Image</th>
+                                    <th>Order Date</th>
+								</tr>
+							</thead>
+
+							<tbody>
+                                {% for data in history %}
+                                    <tr>
+                                        <td style="width:15%;">{{data.product_name.product_code}}</td>
+                                        <td>{{data.product_name}}</td>
+                                        <td>{{data.product_name.brand_name}}</td>
+                                        <td>{{data.quantity}}</td>
+                                        <td>{{data.total_price}}</td>
+                                        <td><div class="user_image"><img src="/static/shop/media/{{ data.product_name.product_image1 }}" alt="No images" id="users_image" style="width:110px;height:60px;"></td>
+                                        <td>{{data.cart_date|date:"M d,Y"}}</td>
+                                    </tr>
+                                {% endfor %}
+							</tbody>
+						</table>
+					</div>
                 </div>
             </div>
         </div>
