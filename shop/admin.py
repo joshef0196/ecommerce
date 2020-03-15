@@ -96,10 +96,12 @@ class WishlistAdmin(admin.ModelAdmin):
     search_fields   = ['product_name__product_name','status']
     list_filter     = ['wish_date','status']
 
-class AddressBookAdmin(admin.ModelAdmin):
-    list_display    = ['user','status']
-    search_fields   = ['user__user_name','status']
+class SalesHistoryAdmin(admin.ModelAdmin):
+    list_display    = ['full_name','email','product','delivery_status','invoice_no', 'quantity', 'total_price','status']
+    search_fields   = ['product_id__product_name','status']
+    list_filter     = ['delivery_status','status']
 
+admin.site.register(models.SalesHistory, SalesHistoryAdmin)
 admin.site.register(models.CompanyInfo, CompanyInfoAdmin)
 admin.site.register(models.SubscriberNewslatter, SubscriberNewslatterAdmin)
 admin.site.register(models.SliderInfo, SliderInfoAdmin)
@@ -122,4 +124,3 @@ admin.site.register(models.SeoContent)
 admin.site.register(models.OfferProduct)
 admin.site.register(models.AddToCart, AddToCartAdmin)
 admin.site.register(models.Wishlist,WishlistAdmin)
-admin.site.register(models.AddressBook,AddressBookAdmin)

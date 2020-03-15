@@ -11,7 +11,12 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 import datetime, hashlib, socket, string, os, re
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-import uuid, socket 
+import uuid, socket, random
+from django.core.mail import send_mail
+from django.views.decorators.csrf import csrf_exempt
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
 
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -25,7 +30,7 @@ def index(request):
     if request.is_ajax():
         search_by = (request.GET.get('search')).strip()
         category  = request.GET.get('category')
-        product_list = models.Products.objects.values("id","product_name").filter(product_name__icontains = search_by, status = True).order_by("-id")[:10] 
+        product_list = models.Products.objects.values("id","product_name","product_image1").filter(product_name__icontains = search_by, status = True).order_by("-id")[:10] 
         return JsonResponse(list(product_list), safe = False)
 
     elif request.method=="POST":   
@@ -109,8 +114,11 @@ def registration(request):
         else :
             messages.error(request,'Registration Fail.Please input valid value.')  
             return redirect("/account/register/")
-
-    return render(request,'shop/registration_form.html')
+    else:
+        context = {
+            'seo_content' : models.SeoContent.objects.filter(status = True).first(),
+        }
+    return render(request,'shop/registration_form.html', context)
  
 def login(request):
     if request.method=="POST":
@@ -128,6 +136,29 @@ def login(request):
             return redirect('/account/login/') 
 
     return render(request,'shop/login.html')
+ 
+def forgot_password(request):
+    if not request.session['user_email']:
+        return redirect('/account/login/')
+        
+    if request.method == "POST":
+        current_pass = request.POST['current_pass']
+        new_pass     = request.POST['new_pass']
+
+        new_md5_obj = hashlib.md5(current_pass.encode())
+        new_enc_pass = new_md5_obj.hexdigest()
+        chk_user     = models.UserRegistration.objects.filter(id = request.session['id'], password = new_enc_pass)
+        if chk_user:
+            new_md5_obj = hashlib.md5(new_pass.encode())
+            new_enc_pass = new_md5_obj.hexdigest()
+            models.UserRegistration.objects.filter(id = request.session['id']).update(password = new_enc_pass)
+            messages.success(request,'Your password has been changed.')
+            return redirect("/change-my-password/")
+        else:
+            messages.error(request,'Invalid current Password')
+            return redirect("/change-my-password/")
+
+    return render(request,'shop/account/forgot_password.html')
 
 def logout(request):  
     request.session['user_email']  = False
@@ -138,12 +169,29 @@ def my_address_book(request):
     if not request.session['user_email']:
         return redirect('/account/login/')
 
-    address = models.AddressBook.objects.filter(user_id_user_email = request.session["user_email"]).first()
+    address = models.UserRegistration.objects.filter(user_email = request.session["user_email"]).first()
     context = {
         'address' : address,
     }
     return render(request,'shop/address_book.html', context)
- 
+
+def edit_address_book(request, id):
+    address = models.AddressBook.objects.filter(id = id)
+    context = {
+        'address':address,
+    }
+    if request.method == "POST":
+        full_name   = request.POST['full_name']
+        phone       = request.POST['phone_number']
+        region      = request.POST['region']
+        city        = request.POST['city']
+        area        = request.POST['area']
+        address     = request.POST['address']
+        models.AddressBook.objects.filter(id = id).update(full_name = full_name, phone_number = phone, region = region, city = city,  area = area, address = address)
+        return redirect('/address-book/')
+
+    return render(request, "shop/edit_address_book.html",context)   
+
 def my_account(request):
     if not request.session['user_email']:
         return redirect('/account/login/')
@@ -268,11 +316,136 @@ def delete_to_cart(request, id):
     return redirect("/cart-list/")    
 
 def checkout(request):
+    cart_list = models.AddToCart.objects.filter(ip_address= socket.gethostbyname(socket.gethostname()), mac_address = hex(uuid.getnode()))
+
+    if request.is_ajax():
+        create_account = True if request.GET.get("create_account") else False
+        full_name      = request.GET.get("cus_name")
+        cus_email      = request.GET.get("cus_email")
+        mobile         = request.GET.get("cus_phone")
+        city           = request.GET.get("cus_city")
+        zip_code       = request.GET.get("cus_postcode")
+        address        = request.GET.get("cus_add1")
+
+        last_order =  models.SalesHistory.objects.last()  
+        if last_order:
+            num        = ''.join(filter(lambda x: x.isdigit(), last_order.invoice_no))
+            invoice_no = "CCTECH"+str(int(num)+1)    
+        else: 
+            invoice_no = "CCTECH"+str(int(100001)) 
+
+        if create_account:
+            new_md5_obj  = hashlib.md5(str(request.GET.get("password")).encode())
+            new_enc_pass = new_md5_obj.hexdigest()
+            models.UserRegistration.objects.create(
+                user_name = full_name, user_email = cus_email, user_password = new_enc_pass, 
+                user_mobile = mobile, city = city, address = address
+            )
+        sales_list = []    
+        for i in cart_list:
+            sales = models.SalesHistory.objects.create(
+                    full_name = full_name, email = cus_email, mobile = mobile, city = city, zip_code = zip_code,
+                    address = address, invoice_no = invoice_no, product_id = i.product_name_id, quantity = i.quantity, total_price = i.total_price
+                )
+            sales_list.append(sales)    
+        if sales_list:
+            cart_list.delete()
+            data = {
+                'status':'success',
+                'invoice_no':invoice_no,
+                'cus_email':cus_email,
+            }
+            return JsonResponse(data, safe = False)
+        else:    
+            data = {
+                'status':'fail'
+            }
+            return JsonResponse(data, safe = False)
+
     context = {
-        'cart_list':models.AddToCart.objects.filter(ip_address= socket.gethostbyname(socket.gethostname()), mac_address = hex(uuid.getnode())),
+        'cart_list': cart_list,
         'total_price':models.AddToCart.objects.filter(ip_address= socket.gethostbyname(socket.gethostname()), mac_address = hex(uuid.getnode())).aggregate(Sum('total_price'))['total_price__sum']
     }
     return render(request,'shop/account/checkout.html', context)
+
+@csrf_exempt
+def payment_cancel(request):
+    print('request details', request)
+    context = {
+        'company_info': models.CompanyProfile.objects.all().last(),
+    }
+    return render(request, 'shop/account/payment_cancel.html',context)
+    
+@csrf_exempt
+def payment_fail(request):
+    print('request details', request)
+    context = {
+        'company_info': models.CompanyProfile.objects.all().last(),
+    }
+    return render(request, 'shop/account/payment_fail.html',context)
+
+@csrf_exempt
+def payment_successful(request):
+    if request.method=="POST":
+        full_name           = request.POST['opt_a']
+        customer_email      = request.POST['opt_b']
+        transaction_id      = str(request.POST['mer_txnid'])
+        mobile              = transaction_id[:11]
+        # gender              = request.GET['gender']
+        # nid_or_passpord     = request.GET['cus_state']
+        invoice_no          = transaction_id # aamarpay unique transaction id
+        aamar_pay_txd_id    = request.POST['pg_txnid'] # aamarpay unique transaction id
+        address             = request.POST['opt_d']
+        # zip_code            = request.POST['mer_txnid'] #Merchant transaction id
+        # city                = str(request.POST['pay_time'])
+        split_trxd_id       = transaction_id[:12]
+        ticket_quantity     = int(split_trxd_id[-1:])
+        ticket_price        = float(request.POST['amount'])
+        store_amount        = float(request.POST['store_amount'])
+        last_ticket         = models.SalesHistory.objects.last()
+
+        models.SalesHistory.objects.filter(invoice_no = invoice_no).update(status = True)
+        order = models.SalesHistory.objects.filter(invoice_no = invoice_no, status = True).first()
+
+        # html = """
+        
+        # Dear """+ order.full_name + """, 
+        
+        # """+ order.product.product_name + """ - Congratulations!! Your """+ str(order.product.cat_name) + """ ticket(s) purchase for ‘Signature of Rhythm’ has been successful by BDT """+ str(order.total_price) + """ ("""+ str(num2words(order.total_price)).title() + """) per ticket. 
+
+
+        # See you on Friday, 22nd March, 2019.
+
+        # """
+        
+        # # Creating message.
+        # msg = MIMEMultipart('alternative')
+        # msg['Subject'] = "Congratulations!Your ticket successfully bought"
+        # msg['From']    = settings.EMAIL_HOST_USER
+        # msg['To']      = order.email
+        
+        # # The MIME types for text/html
+        # HTML_Contents = MIMEText(html, 'html')
+        
+        # # Attachment and HTML to body message.
+
+        # msg.attach(HTML_Contents)
+        
+        # #set up the SMTP server
+        # s = smtplib.SMTP(host='us2.smtp.mailhostbox.com', port=25)
+        # s.starttls()
+        # s.login(msg['From'], settings.EMAIL_HOST_PASSWORD)
+        
+        # s.sendmail(msg['From'], msg['To'], msg.as_string())
+        # s.quit()
+        
+        messages.success(request,'Your order successfully placed')  
+        
+        context = {
+            'order': order,
+        } 
+        return render(request, 'shop/account/order_complete.html', context)   
+    return render(request, 'shop/account/order_complete.html') 
 
 def order_complete(request):
 
@@ -311,7 +484,6 @@ def sub_products(request, cat_name, sub_name):
     context={
         'product_sub_cat':product_sub_cat,
         'pro_brand':pro_brand,
-        'product_sub_seo':product_sub_cat[0],
     }
     return render(request,'shop/sub_products.html', context)
  

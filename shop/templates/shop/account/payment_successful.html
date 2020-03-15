@@ -1,0 +1,20 @@
+{% extends 'booking/base.html' %}
+{% block title %} Signature of Rhythm | Ticket  {% endblock %}
+{% load staticfiles %}
+{% block content %}
+    <div class="user_ticket_booking" style = "min-height:600px;">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <h3 style = "padding:300px 0px 0px 50px;color:white;">
+            Payment successful. <br>
+            A email sent to {{ user_email }}. Please check your email.Thank you
+        </h3>
+    </div>
+
+{% endblock %}

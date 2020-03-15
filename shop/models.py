@@ -243,6 +243,8 @@ class UserRegistration(models.Model):
     user_email       = models.EmailField(unique = True)
     user_password    = models.CharField(max_length=100)
     user_mobile      = models.CharField(max_length=15)
+    city             = models.CharField(max_length=50)
+    area             = models.CharField(max_length=50)
     address          = models.TextField(blank=True)
     status           = models.BooleanField(default=True)
 
@@ -253,18 +255,29 @@ class UserRegistration(models.Model):
         verbose_name = 'User Registration'
         verbose_name_plural = 'Users Registration'
 
-class AddressBook(models.Model):
-    user          = models.ForeignKey(UserRegistration, on_delete=models.CASCADE)
-    city          = models.CharField(max_length=50)
-    area          = models.CharField(max_length=50)
-    status        = models.BooleanField(default=1)
+class SalesHistory(models.Model):
+    product             = models.ForeignKey(Products, on_delete = models.CASCADE) 
+    full_name           = models.CharField(max_length=60)
+    email               = models.EmailField(max_length=80)
+    mobile              = models.CharField(max_length=16)
+    quantity            = models.IntegerField(default = 1)
+    total_price         = models.FloatField(default = 0)
+    price_after_charge  = models.FloatField(default = 0)
+    invoice_no          = models.CharField(max_length=60)
+    aamar_pay_txd_id    = models.CharField(max_length=60, blank=True)
+    zip_code            = models.CharField(max_length=30, blank = True)
+    city                = models.CharField(max_length=30, blank = True)
+    address             = models.TextField(blank = True)
+    sales_date          = models.DateTimeField(auto_now_add = True)
+    delivery_status     = models.BooleanField(default=False)
+    status              = models.BooleanField(default=False)
 
     def __str__(self):
-        return str(self.user)
-    
+        return self.full_name
+
     class Meta:
-        verbose_name = 'Address Book'
-        verbose_name_plural = 'Address Books'
+        verbose_name='Sale'
+        verbose_name_plural='Sales Histories'
 
 class Branches(models.Model):
     branch_name      = models.CharField(max_length=100)

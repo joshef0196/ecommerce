@@ -1,8 +1,8 @@
 {% extends 'shop/base.html' %}
-{% block title %} {{ warranty.meta_title }} {% endblock %}
-{% block meta_description %} {{ warranty.meta_description }} {% endblock %}
-{% block meta_keywords %} {{ warranty.meta_keywords }} {% endblock %}
-{% block meta_title %} {{ warranty.meta_title }} {% endblock %}
+{% block title %} {{ seo_content.reg_title }} {% endblock %}
+{% block meta_description %} {{ seo_content.reg_description }} {% endblock %}
+{% block meta_keywords %} {{ seo_content.reg_keywords }} {% endblock %}
+{% block meta_title %} {{ seo_content.reg_title }} {% endblock %}
 {% load staticfiles %}
 {% block contain %}
     <section class="testimonial py-5" id="testimonial">
@@ -11,13 +11,13 @@
                 <div class="col-md-4 py-5 border bg-gray text-black text-center ">
                     <div class=" ">
                         <div class="list-group category_nav">
-                           <a href="/account/login/" class="list-group-item">Login</a>
-                           <a href="/account/register/" class="list-group-item">Register</a>
-                           <a href="https://www.startech.com.bd/account/register" class="list-group-item">Forgotten Password</a>
-                           <a href="/my-account/" class="list-group-item">My Account</a>
-                           <a href="/address-book/" class="list-group-item">Address Book</a>
-                           <a href="/order-history/" class="list-group-item">Order History</a>
-                           <a href="/account/logout/" class="list-group-item">Sign out</a>
+                            <a href="/account/login/" class="list-group-item">Login</a>
+                            <a href="/account/register/" class="list-group-item">Register</a>
+                            <a href="/account/change-password/" class="list-group-item">Forgotten Password</a>
+                            <a href="/my-account/" class="list-group-item">My Account</a>
+                            <a href="/address-book/" class="list-group-item">Address Book</a>
+                            <a href="/order-history/" class="list-group-item">Order History</a>
+                            <a href="/account/logout/" class="list-group-item">Sign out</a>
                         </div>
                     </div>
                 </div>

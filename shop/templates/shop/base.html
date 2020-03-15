@@ -78,12 +78,12 @@
 										</div>
 									</div>
 									<input type="search" name="search" id="txt_Search" class="header_search_input" placeholder="Search for products..." />
-									<ul style="margin: 50px 0px 0px 200px; padding: 0px;z-index: 999999;" id="search_ul">
+									<ul style="margin: 50px 0px 0px 0px; padding: 1px 9px 0px 8px;z-index: 999999;background: #eaeaea;" id="search_ul">
+
 									</ul>
 								</div>
 							</div>
 						</div>
-						
 					</div>
 
 					<!-- Wishlist -->
@@ -438,25 +438,31 @@
 	});
 
 	$("#txt_Search").keydown(function() {
-		$.ajax({
-			url: "/",
-			data : {
-				'category':$(".custom_dropdown_placeholder").html(),
-				'search':$("#txt_Search").val()
-			},
-			success: function(data){
-				$("#search_ul").html('');
-				$.each(data, function(i, item) {
-					var product_url = (item.product_name).toString().replace(new RegExp(" ", 'g'), "-");
-					$("#search_ul").append(
-						`<li><a href='/`+product_url+`'>`+item.product_name+`</a></li>`
-					);
-				})			
-			},
-			error: function(data){
-				console.log(data);
-			}
-		});
+		if($("#txt_Search").val().length > 0)
+		{
+			$.ajax({
+				url: "/",
+				data : {
+					'category':$(".custom_dropdown_placeholder").html(),
+					'search':$("#txt_Search").val()
+				},
+				success: function(data){
+					$("#search_ul").html('');
+					$.each(data, function(i, item) {
+						var product_url = (item.product_name).toString().replace(new RegExp(" ", 'g'), "-");
+						$("#search_ul").append(
+							`<li><img src="/static/shop/media/`+item.product_image1+`" height="50" width="50" class="img-thumbnail" /> | <a href='/`+product_url+`'>`+item.product_name+`</a></li>`
+						);
+					})			
+				},
+				error: function(data){
+					console.log(data);
+				}
+			});
+		}
+		else{
+			$("#search_ul").html("");
+		}
 	});
 </script>
 
@@ -482,6 +488,7 @@
 <script src="{% static 'shop/plugins/parallax-js-master/parallax.min.js' %}"></script>
 <script src="{% static 'shop/js/main.js' %}"></script>
 <script src="{% static 'shop/js/form.js' %}"></script>
+<script src="{% static 'shop/js/manual.js' %}"></script>
 
 </body>
 {% endfor %}
